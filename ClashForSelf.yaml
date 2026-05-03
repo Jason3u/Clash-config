@@ -128,8 +128,8 @@ rule-providers:
 rules:
  # 币安核心域名
   - RULE-SET,Ad,🆎 AdBlock
-  - RULE-SET,Binance,🇨🇳 Binance
-  - RULE-SET,OKX,🇨🇳 Binance
+  - RULE-SET,Binance,🇨🇳 金融专用
+  - RULE-SET,OKX,🇨🇳 金融专用
   - RULE-SET,OpenAi,🤖 OpenAi
   - RULE-SET,Gemini,🤖 Gemini
   - RULE-SET,BiliBili,📺 哔哩哔哩
