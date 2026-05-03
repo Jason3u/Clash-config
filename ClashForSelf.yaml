@@ -68,7 +68,7 @@ proxy-providers:
   Sub:
     <<: *a1
     url: https://liangxin.xyz/api/v1/liangxin?OwO=08473de9c81c32890fb3c8744ba74b5b
-
+    #默认B-url
     path: ./proxy_providers/sub.yaml
     
 # URL后面填写格式1: 直接填写你的机场Clash订阅[推荐此种方式，避免订阅泄露
