@@ -81,8 +81,9 @@ proxy-groups:
   - {name: 🌏 全球加速, <<: *a3}
   - {name: 🍎 苹果服务, <<: *a3}
   - {name: 📺 哔哩哔哩, type: select, proxies: [DIRECT, 🇭🇰 香港节点, 🇨🇳 台湾节点]}
-  - {name: 🤖 OpenAi,   type: select, proxies: [🇺🇲 美国节点]}
-  - {name: 🤖 Gemini,   type: select, proxies: [🇨🇳 台湾节点]}
+  - {name: 🤖 OpenAi,  type: select, proxies: [🇺🇲 美国节点]}
+  - {name: 🤖 Gemini,  type: select, proxies: [🇨🇳 台湾节点]}
+  - {name: 🇨🇳 金融专用,  type: select, proxies: [🇨🇳 台湾节点]}
   - {name: 🎬 国际媒体, <<: *a3}
   - {name: 🌌 谷歌服务, <<: *a3}
   - {name: 📟 电报消息, <<: *a3}
@@ -127,8 +128,8 @@ rule-providers:
 rules:
  # 币安核心域名
   - RULE-SET,Ad,🆎 AdBlock
-  - RULE-SET,bntrace,🇨🇳 台湾节点
-  - RULE-SET,OKX,🇨🇳 台湾节点
+  - RULE-SET,Binance,🇨🇳 Binance
+  - RULE-SET,OKX,🇨🇳 Binance
   - RULE-SET,OpenAi,🤖 OpenAi
   - RULE-SET,Gemini,🤖 Gemini
   - RULE-SET,BiliBili,📺 哔哩哔哩
