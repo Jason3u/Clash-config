@@ -125,9 +125,13 @@ rule-providers:
 
 # 分流Policy 
 rules:
+ # 币安核心域名
+  - DOMAIN-SUFFIX,binance.com,🇨🇳 台湾节点
+  - DOMAIN-SUFFIX,binance.cc,🇨🇳 台湾节点
+  - DOMAIN-SUFFIX,bnbstatic.com,🇨🇳 台湾节点
+  - DOMAIN-SUFFIX,bntrace.com,🇨🇳 台湾节点
   - RULE-SET,Ad,🆎 AdBlock
   - RULE-SET,Twitter,🇨🇳 台湾节点
-  - DOMAIN-SUFFIX,Binance,🇨🇳 台湾节点
   - RULE-SET,OKX,🇨🇳 台湾节点
   - RULE-SET,OpenAi,🤖 OpenAi
   - RULE-SET,Gemini,🤖 Gemini
