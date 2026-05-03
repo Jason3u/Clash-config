@@ -101,26 +101,26 @@ proxy-groups:
 
 # 分流规则 
 rule-providers:
-  Ad:          {<<: *a5, url: https://raw.githubusercontent.com/Cats-Team/AdRules/main/adrules_domainset.txt,                                     path: ./ruleset/anti-ad-clash.yaml}
-  OKX:         {<<: *a6, url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/OKX/OKX.yaml,           path: ./ruleset/OKX.yaml          }
-  Binance:     {<<: *a6, url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Binance/Binance.yaml,   path: ./ruleset/Binance.yaml      }
-  Gemini:      {<<: *a6, url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Gemini/Gemini.yaml,     path: ./ruleset/Gemini.yaml       }
-  OpenAi:      {<<: *a6, url: https://gist.githubusercontent.com/ddgksf2013/cb4121e8b5c5d865cc949cb8120320c4/raw/Ai.yaml,                         path: ./ruleset/OpenAi.yaml       }
-  BiliBili:    {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/BiliBili/BiliBili.yaml,                  path: ./ruleset/BiliBili.yaml     }
-  Bahamut:     {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Bahamut/Bahamut.yaml,                    path: ./ruleset/Bahamut.yaml      } 
-  GlobalMedia: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GlobalMedia/GlobalMedia_Classical.yaml,  path: ./ruleset/GlobalMedia.yaml  }
-  Apple:       {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Apple/Apple_Classical.yaml,              path: ./ruleset/Apple.yaml        }
-  Github:      {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GitHub/GitHub.yaml,                      path: ./ruleset/Github.yaml       }
-  Microsoft:   {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Microsoft/Microsoft.yaml,                path: ./ruleset/Microsoft.yaml    }
-  Google:      {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Google/Google.yaml,                      path: ./ruleset/Google.yaml       }
-  Telegram:    {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Telegram/Telegram.yaml,                  path: ./ruleset/Telegram.yaml     }
-  Twitter:     {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Twitter/Twitter.yaml,                    path: ./ruleset/Twitter.yaml      }
-  Game:        {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Game/Game.yaml,                          path: ./ruleset/Game.yaml         }
-  ProxyLite:   {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/ProxyLite/ProxyLite.yaml,                path: ./ruleset/ProxyLite.yaml    }
-  Direct:      {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Direct/Direct.yaml,                      path: ./ruleset/Direct.yaml       }
-  Lan:         {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Lan/Lan.yaml,                            path: ./ruleset/Lan.yaml          }
-  Download:    {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Download/Download.yaml,                  path: ./ruleset/Download.yaml     }
-  ChinaIP:     {<<: *a7, url: https://cdn.jsdelivr.net/gh/soffchen/GeoIP2-CN@release/clash-rule-provider.yml,                                     path: ./ruleset/ChinaIP.yaml      }
+  Ad:          {<<: *a5, url: https://raw.githubusercontent.com/Cats-Team/AdRules/main/adrules_domainset.txt,                                     path: ./RuleSet/anti-ad-clash.yaml}
+  OKX:         {<<: *a6, url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/OKX/OKX.yaml,           path: ./RuleSet/OKX.yaml          }
+  Binance:     {<<: *a6, url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Binance/Binance.yaml,   path: ./RuleSet/Binance.yaml      }
+  Gemini:      {<<: *a6, url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Gemini/Gemini.yaml,     path: ./RuleSet/Gemini.yaml       }
+  OpenAi:      {<<: *a6, url: https://gist.githubusercontent.com/ddgksf2013/cb4121e8b5c5d865cc949cb8120320c4/raw/Ai.yaml,                         path: ./RuleSet/OpenAi.yaml       }
+  BiliBili:    {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/BiliBili/BiliBili.yaml,                  path: ./RuleSet/BiliBili.yaml     }
+  Bahamut:     {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Bahamut/Bahamut.yaml,                    path: ./RuleSet/Bahamut.yaml      } 
+  GlobalMedia: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GlobalMedia/GlobalMedia_Classical.yaml,  path: ./RuleSet/GlobalMedia.yaml  }
+  Apple:       {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Apple/Apple_Classical.yaml,              path: ./RuleSet/Apple.yaml        }
+  Github:      {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GitHub/GitHub.yaml,                      path: ./RuleSet/Github.yaml       }
+  Microsoft:   {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Microsoft/Microsoft.yaml,                path: ./RuleSet/Microsoft.yaml    }
+  Google:      {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Google/Google.yaml,                      path: ./RuleSet/Google.yaml       }
+  Telegram:    {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Telegram/Telegram.yaml,                  path: ./RuleSet/Telegram.yaml     }
+  Twitter:     {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Twitter/Twitter.yaml,                    path: ./RuleSet/Twitter.yaml      }
+  Game:        {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Game/Game.yaml,                          path: ./RuleSet/Game.yaml         }
+  ProxyLite:   {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/ProxyLite/ProxyLite.yaml,                path: ./RuleSet/ProxyLite.yaml    }
+  Direct:      {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Direct/Direct.yaml,                      path: ./RuleSet/Direct.yaml       }
+  Lan:         {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Lan/Lan.yaml,                            path: ./RuleSet/Lan.yaml          }
+  Download:    {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Download/Download.yaml,                  path: ./RuleSet/Download.yaml     }
+  ChinaIP:     {<<: *a7, url: https://cdn.jsdelivr.net/gh/soffchen/GeoIP2-CN@release/clash-rule-provider.yml,                                     path: ./RuleSet/ChinaIP.yaml      }
 
 
 # 分流Policy 
