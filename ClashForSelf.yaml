@@ -127,6 +127,7 @@ rule-providers:
 rules:
   - RULE-SET,Ad,🆎 AdBlock
   - RULE-SET,Twitter,🇨🇳 台湾节点
+  - DOMAIN-SUFFIX,Binance,🇨🇳 台湾节点
   - RULE-SET,OKX,🇨🇳 台湾节点
   - RULE-SET,OpenAi,🤖 OpenAi
   - RULE-SET,Gemini,🤖 Gemini
@@ -138,7 +139,6 @@ rules:
   - RULE-SET,Microsoft, 🌏 全球加速
   - RULE-SET,Google,🌌 谷歌服务
   - RULE-SET,Telegram,📟 电报消息
-  - RULE-SET,Binance,🇨🇳 台湾节点
   - RULE-SET,Game,🎮 游戏平台
   - RULE-SET,ProxyLite,🌏 全球加速
   - RULE-SET,Direct,DIRECT
