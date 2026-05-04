@@ -128,7 +128,7 @@ rule-providers:
 rules:
  # 币安核心域名
   - RULE-SET,Ad,🆎 AdBlock
-  - RULE-SET,Binance,🇨🇳 金融专用
+  - RULE-SET,Binance,DIRECT
   - RULE-SET,OKX,🇨🇳 金融专用
   - RULE-SET,OpenAi,🤖 OpenAi
   - RULE-SET,Gemini,🤖 Gemini
