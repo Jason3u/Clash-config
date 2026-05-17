@@ -1,9 +1,9 @@
 #==========================================
-# @ConfigName        Jason 极简基础配置
-# @UpdateTime        2026/05/03
+# @ConfigName        Jason 自用完整分流配置
+# @UpdateTime        2026/05/18/1:15
 #==========================================
 
-# 端口设置
+# 端口
 port: 7890
 socks-port: 7891
 mixed-port: 7893
@@ -14,7 +14,7 @@ log-level: info
 ipv6: false
 external-controller: 127.0.0.1:9090
 
-# DNS 设置
+# DNS
 dns:
   enable: true
   ipv6: false
@@ -27,7 +27,7 @@ dns:
     - https://cloudflare-dns.com/dns-query
     - https://dns.google/dns-query
 
-# 订阅链接
+# 机场订阅（替换为你自己的链接）
 proxy-providers:
   Sub:
     type: http
@@ -41,62 +41,104 @@ proxy-providers:
 
 proxies: null
 
+# 策略组
 proxy-groups:
-  # 手动切换：从所有订阅节点中任选一个
+  # ---- 分流策略组 ----
   - name: 🚀 手动切换
     type: select
-    use:
-      - Sub
-  # 自动测速：自动选延迟最低的节点
-  - name: ♻️ 自动选择
-    type: url-test
-    lazy: true
-    url: http://www.gstatic.com/generate_204
-    interval: 900
-    use:
-      - Sub
-  # 地区分组（自动测速）
-  - name: 🇭🇰 香港节点
-    type: url-test
-    lazy: true
-    url: http://www.gstatic.com/generate_204
-    interval: 900
-    use:
-      - Sub
-    filter: "港|HK|(?i)Hong"
-  - name: 🇯🇵 日本节点
-    type: url-test
-    lazy: true
-    url: http://www.gstatic.com/generate_204
-    interval: 900
-    use:
-      - Sub
-    filter: "日|东京|JP|(?i)Japan"
-  - name: 🇨🇳 台湾节点
-    type: url-test
-    lazy: true
-    url: http://www.gstatic.com/generate_204
-    interval: 900
-    use:
-      - Sub
-    filter: "台|湾|TW|(?i)Taiwan"
-  - name: 🇺🇲 美国节点
-    type: url-test
-    lazy: true
-    url: http://www.gstatic.com/generate_204
-    interval: 900
-    use:
-      - Sub
-    filter: "美|US|(?i)States|American"
-  - name: 🇸🇬 狮城节点
-    type: url-test
-    lazy: true
-    url: http://www.gstatic.com/generate_204
-    interval: 900
-    use:
-      - Sub
-    filter: "新|坡|SG|(?i)Singapore"
-  # 兜底分流：默认走自动选择
+    use: [Sub]
+  - name: 🌏 全球加速
+    type: select
+    proxies:
+      - ♻️ 自动选择
+      - 🚀 手动切换
+      - 🇭🇰 香港节点
+      - 🇯🇵 日本节点
+      - 🇺🇲 美国节点
+      - 🇨🇳 台湾节点
+      - 🇸🇬 狮城节点
+      - DIRECT
+  - name: 🍎 苹果服务
+    type: select
+    proxies:
+      - ♻️ 自动选择
+      - 🚀 手动切换
+      - 🇭🇰 香港节点
+      - 🇯🇵 日本节点
+      - 🇺🇲 美国节点
+      - 🇨🇳 台湾节点
+      - 🇸🇬 狮城节点
+      - DIRECT
+  - name: 📺 哔哩哔哩
+    type: select
+    proxies:
+      - DIRECT
+      - 🇭🇰 香港节点
+      - 🇨🇳 台湾节点
+  - name: 🤖 OpenAi
+    type: select
+    proxies:
+      - 🇺🇲 美国节点
+  - name: 🤖 Gemini
+    type: select
+    proxies:
+      - 🇨🇳 台湾节点
+  - name: 🤖 Claude
+    type: select
+    proxies:
+      - 🇺🇲 美国节点
+  - name: 🖥 Behance
+    type: select
+    proxies:
+      - 🇯🇵 日本节点
+  - name: 👥 社交网络
+    type: select
+    proxies:
+      - 🇭🇰 香港节点
+      - 🇺🇸 美国节点
+      - 🚀 手动切换
+  - name: 🇨🇳 金融专用
+    type: select
+    proxies:
+      - 🇨🇳 台湾节点
+  - name: 🎬 国际媒体
+    type: select
+    proxies:
+      - ♻️ 自动选择
+      - 🚀 手动切换
+      - 🇭🇰 香港节点
+      - 🇯🇵 日本节点
+      - 🇺🇲 美国节点
+      - 🇨🇳 台湾节点
+      - 🇸🇬 狮城节点
+      - DIRECT
+  - name: 🌌 谷歌服务
+    type: select
+    proxies:
+      - 🇭🇰 香港节点
+      - ♻️ 自动选择
+      - 🚀 手动切换
+  - name: 📟 电报消息
+    type: select
+    proxies:
+      - 🇭🇰 香港节点
+      - ♻️ 自动选择
+      - 🚀 手动切换
+  - name: 🐦 推特服务
+    type: select
+    proxies:
+      - 🇭🇰 香港节点
+  - name: 🎮 游戏平台
+    type: select
+    proxies:
+      - ♻️ 自动选择
+      - 🚀 手动切换
+      - 🇭🇰 香港节点
+      - 🇯🇵 日本节点
+      - 🇺🇲 美国节点
+      - 🇨🇳 台湾节点
+      - 🇸🇬 狮城节点
+      - DIRECT
   - name: 🐟 兜底分流
     type: select
     proxies:
@@ -104,6 +146,268 @@ proxy-groups:
       - 🚀 手动切换
       - DIRECT
 
-# 最简规则：全部未匹配流量走兜底分流（相当于全局代理）
+  # ---- 节点分组（自动测速） ----
+  - name: ♻️ 自动选择
+    type: url-test
+    lazy: true
+    url: http://www.gstatic.com/generate_204
+    interval: 900
+    use: [Sub]
+  - name: 🇭🇰 香港节点
+    type: url-test
+    lazy: true
+    url: http://www.gstatic.com/generate_204
+    interval: 900
+    use: [Sub]
+    filter: "港|HK|(?i)Hong"
+  - name: 🇯🇵 日本节点
+    type: url-test
+    lazy: true
+    url: http://www.gstatic.com/generate_204
+    interval: 900
+    use: [Sub]
+    filter: "日|东京|JP|(?i)Japan"
+  - name: 🇨🇳 台湾节点
+    type: url-test
+    lazy: true
+    url: http://www.gstatic.com/generate_204
+    interval: 900
+    use: [Sub]
+    filter: "台|湾|TW|(?i)Taiwan"
+  - name: 🇺🇲 美国节点
+    type: url-test
+    lazy: true
+    url: http://www.gstatic.com/generate_204
+    interval: 900
+    use: [Sub]
+    filter: "美|US|(?i)States|American"
+  - name: 🇸🇬 狮城节点
+    type: url-test
+    lazy: true
+    url: http://www.gstatic.com/generate_204
+    interval: 900
+    use: [Sub]
+    filter: "新|坡|SG|(?i)Singapore"
+
+# 分流规则集（全部来自 blackmatrix7 仓库）
+rule-providers:
+  # 交易所
+  Binance:
+    type: http
+    behavior: classical
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Binance/Binance.yaml
+    path: ./RuleSet/Binance.yaml
+  OKX:
+    type: http
+    behavior: classical
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/OKX/OKX.yaml
+    path: ./RuleSet/OKX.yaml
+  # AI 工具
+  OpenAI:
+    type: http
+    behavior: classical
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/OpenAI/OpenAI.yaml
+    path: ./RuleSet/OpenAI.yaml
+  Gemini:
+    type: http
+    behavior: classical
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Gemini/Gemini.yaml
+    path: ./RuleSet/Gemini.yaml
+  Claude:
+    type: http
+    behavior: classical
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Claude/Claude.yaml
+    path: ./RuleSet/Claude.yaml
+  # 社交媒体
+  Twitter:
+    type: http
+    behavior: classical
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Twitter/Twitter.yaml
+    path: ./RuleSet/Twitter.yaml
+  Telegram:
+    type: http
+    behavior: classical
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Telegram/Telegram.yaml
+    path: ./RuleSet/Telegram.yaml
+  TikTok:
+    type: http
+    behavior: classical
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/TikTok/TikTok.yaml
+    path: ./RuleSet/TikTok.yaml
+  Instagram:
+    type: http
+    behavior: classical
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Instagram/Instagram.yaml
+    path: ./RuleSet/Instagram.yaml
+  Reddit:
+    type: http
+    behavior: classical
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Reddit/Reddit.yaml
+    path: ./RuleSet/Reddit.yaml
+  Discord:
+    type: http
+    behavior: classical
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Discord/Discord.yaml
+    path: ./RuleSet/Discord.yaml
+  Facebook:
+    type: http
+    behavior: classical
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Facebook/Facebook.yaml
+    path: ./RuleSet/Facebook.yaml
+  Tumblr:
+    type: http
+    behavior: classical
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Tumblr/Tumblr.yaml
+    path: ./RuleSet/Tumblr.yaml
+  Threads:
+    type: http
+    behavior: classical
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Threads/Threads.yaml
+    path: ./RuleSet/Threads.yaml
+  Snapchat:
+    type: http
+    behavior: classical
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Snapchat/Snapchat.yaml
+    path: ./RuleSet/Snapchat.yaml
+  # 视频 / 媒体
+  BiliBili:
+    type: http
+    behavior: classical
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/BiliBili/BiliBili.yaml
+    path: ./RuleSet/BiliBili.yaml
+  Bahamut:
+    type: http
+    behavior: classical
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Bahamut/Bahamut.yaml
+    path: ./RuleSet/Bahamut.yaml
+  GlobalMedia:
+    type: http
+    behavior: classical
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GlobalMedia/GlobalMedia_Classical.yaml
+    path: ./RuleSet/GlobalMedia.yaml
+  # 系统 / 工具
+  Apple:
+    type: http
+    behavior: classical
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Apple/Apple_Classical.yaml
+    path: ./RuleSet/Apple.yaml
+  Github:
+    type: http
+    behavior: classical
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GitHub/GitHub.yaml
+    path: ./RuleSet/Github.yaml
+  Microsoft:
+    type: http
+    behavior: classical
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Microsoft/Microsoft.yaml
+    path: ./RuleSet/Microsoft.yaml
+  Google:
+    type: http
+    behavior: classical
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Google/Google.yaml
+    path: ./RuleSet/Google.yaml
+  Game:
+    type: http
+    behavior: classical
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Game/Game.yaml
+    path: ./RuleSet/Game.yaml
+  ProxyLite:
+    type: http
+    behavior: classical
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/ProxyLite/ProxyLite.yaml
+    path: ./RuleSet/ProxyLite.yaml
+  # 直连
+  Direct:
+    type: http
+    behavior: classical
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Direct/Direct.yaml
+    path: ./RuleSet/Direct.yaml
+  Lan:
+    type: http
+    behavior: classical
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Lan/Lan.yaml
+    path: ./RuleSet/Lan.yaml
+  Download:
+    type: http
+    behavior: classical
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Download/Download.yaml
+    path: ./RuleSet/Download.yaml
+  ChinaIP:
+    type: http
+    behavior: ipcidr
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/soffchen/GeoIP2-CN@release/clash-rule-provider.yml
+    path: ./RuleSet/ChinaIP.yaml
+
+# 分流规则
 rules:
+  # 交易所（币安直连，OKX 走台湾）
+  - RULE-SET,Binance,DIRECT
+  - RULE-SET,OKX,🇨🇳 金融专用
+  # AI 工具（各自独立）
+  - RULE-SET,OpenAI,🤖 OpenAi
+  - RULE-SET,Gemini,🤖 Gemini
+  - RULE-SET,Claude,🤖 Claude
+  # Twitter 强制香港
+  - RULE-SET,Twitter,🐦 推特服务
+  # Telegram 优先香港
+  - RULE-SET,Telegram,📟 电报消息
+  # Behance 走日本（直接用域名匹配，无需 rule-provider）
+  - DOMAIN-SUFFIX,behance.net,🖥 Behance
+  # 社交网络合集
+  - RULE-SET,TikTok,👥 社交网络
+  - RULE-SET,Instagram,👥 社交网络
+  - RULE-SET,Reddit,👥 社交网络
+  - RULE-SET,Discord,👥 社交网络
+  - RULE-SET,Facebook,👥 社交网络
+  - RULE-SET,Tumblr,👥 社交网络
+  - RULE-SET,Threads,👥 社交网络
+  - RULE-SET,Snapchat,👥 社交网络
+  # 视频 / 动漫
+  - RULE-SET,BiliBili,📺 哔哩哔哩
+  - RULE-SET,Bahamut,📺 哔哩哔哩
+  - RULE-SET,GlobalMedia,🎬 国际媒体
+  # 系统服务
+  - RULE-SET,Apple,🍎 苹果服务
+  - RULE-SET,Github,🌏 全球加速
+  - RULE-SET,Microsoft,🌏 全球加速
+  - RULE-SET,Google,🌌 谷歌服务
+  # 游戏
+  - RULE-SET,Game,🎮 游戏平台
+  # 轻量代理
+  - RULE-SET,ProxyLite,🌏 全球加速
+  # 直连规则
+  - RULE-SET,Direct,DIRECT
+  - RULE-SET,Lan,DIRECT
+  - RULE-SET,Download,DIRECT
+  - RULE-SET,ChinaIP,DIRECT
+  - GEOIP,CN,DIRECT
+  # 兜底
   - MATCH,🐟 兜底分流
