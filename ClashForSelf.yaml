@@ -1,6 +1,6 @@
 #==========================================
 # @ConfigName        Jason 自用完整分流配置
-# @UpdateTime        2026/05/18/1:15
+# @UpdateTime        2026/05/18
 #==========================================
 
 # 端口
@@ -27,7 +27,7 @@ dns:
     - https://cloudflare-dns.com/dns-query
     - https://dns.google/dns-query
 
-# 机场订阅（替换为你自己的链接）
+# 机场订阅（！！务必替换成你自己的新订阅链接！！）
 proxy-providers:
   Sub:
     type: http
@@ -36,7 +36,7 @@ proxy-providers:
       enable: true
       url: http://www.gstatic.com/generate_204
       interval: 1800
-    url: https://liangxin.xyz/api/v1/liangxin?OwO=1d5b8d8909c277c53a418da6802516d3
+    url: https://liangxin.xyz/api/v1/liangxin?OwO=你的Token请替换
     path: ./proxy_providers/sub.yaml
 
 proxies: null
@@ -54,7 +54,7 @@ proxy-groups:
       - 🚀 手动切换
       - 🇭🇰 香港节点
       - 🇯🇵 日本节点
-      - 🇺🇲 美国节点
+      - 🇺🇸 美国节点
       - 🇨🇳 台湾节点
       - 🇸🇬 狮城节点
       - DIRECT
@@ -65,7 +65,7 @@ proxy-groups:
       - 🚀 手动切换
       - 🇭🇰 香港节点
       - 🇯🇵 日本节点
-      - 🇺🇲 美国节点
+      - 🇺🇸 美国节点
       - 🇨🇳 台湾节点
       - 🇸🇬 狮城节点
       - DIRECT
@@ -78,7 +78,7 @@ proxy-groups:
   - name: 🤖 OpenAi
     type: select
     proxies:
-      - 🇺🇲 美国节点
+      - 🇺🇸 美国节点
   - name: 🤖 Gemini
     type: select
     proxies:
@@ -86,7 +86,7 @@ proxy-groups:
   - name: 🤖 Claude
     type: select
     proxies:
-      - 🇺🇲 美国节点
+      - 🇺🇸 美国节点
   - name: 🖥 Behance
     type: select
     proxies:
@@ -108,7 +108,7 @@ proxy-groups:
       - 🚀 手动切换
       - 🇭🇰 香港节点
       - 🇯🇵 日本节点
-      - 🇺🇲 美国节点
+      - 🇺🇸 美国节点
       - 🇨🇳 台湾节点
       - 🇸🇬 狮城节点
       - DIRECT
@@ -135,7 +135,7 @@ proxy-groups:
       - 🚀 手动切换
       - 🇭🇰 香港节点
       - 🇯🇵 日本节点
-      - 🇺🇲 美国节点
+      - 🇺🇸 美国节点
       - 🇨🇳 台湾节点
       - 🇸🇬 狮城节点
       - DIRECT
@@ -174,7 +174,7 @@ proxy-groups:
     interval: 900
     use: [Sub]
     filter: "台|湾|TW|(?i)Taiwan"
-  - name: 🇺🇲 美国节点
+  - name: 🇺🇸 美国节点
     type: url-test
     lazy: true
     url: http://www.gstatic.com/generate_204
@@ -379,7 +379,7 @@ rules:
   - RULE-SET,Twitter,🐦 推特服务
   # Telegram 优先香港
   - RULE-SET,Telegram,📟 电报消息
-  # Behance 走日本（直接用域名匹配，无需 rule-provider）
+  # Behance 走日本（直接用域名匹配）
   - DOMAIN-SUFFIX,behance.net,🖥 Behance
   # 社交网络合集
   - RULE-SET,TikTok,👥 社交网络
