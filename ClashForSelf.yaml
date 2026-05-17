@@ -206,7 +206,7 @@ proxy-providers:
     <<: *a1
 
     # 机场订阅链接
-    url: ""
+    url: "https://liangxin.xyz/api/v1/liangxin?OwO=1d5b8d8909c277c53a418da6802516d3"
 
     # 本地缓存路径
     path: ./proxy_providers/sub.yaml
