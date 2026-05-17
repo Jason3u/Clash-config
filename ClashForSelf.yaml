@@ -1,159 +1,546 @@
 #==========================================
-# @ConfigName        Jason自用Clash配置文件
-# @Author            @Jason3u
-# @TgChannel         https://t.me/+y4QfC46XndVkMGI9
-# @UpdateTime        2026/05/03
-# @Function          支持手动选择、自动测速、广告屏蔽、兜底分流、按国家分组节点、多机场订阅等，配置适用ClashVerge   
-# @ClashVerge        https://github.com/clash-verge-rev/clash-verge-rev/releases
-# @Thanks            @blackmatrix7, @Fndroid, @Anti,@ddgksf2013
-# @Attention         𝐏𝐥𝐞𝐚𝐬𝐞 𝐮𝐬𝐞 𝐭𝐡𝐞 𝐥𝐚𝐭𝐞𝐬𝐭 𝐯𝐞𝐫𝐬𝐢𝐨𝐧 𝐨𝐟 𝐂𝐥𝐚𝐬𝐡𝐕𝐞𝐫𝐠𝐞𝐟𝐨𝐫𝐖𝐢𝐧𝐝𝐨𝐰𝐬
-# @ConfigVersion     1.0
+# Jason 自用 Clash 配置（Android / PC 通用）
 #==========================================
 
-port: 7890           # HTTP 代理端口
-socks-port: 7891     # Socks 端口
-redir-port: 7892     # Redir 端口
-mixed-port: 7893     # 混合端口
-allow-lan: true      # 允许局域网连接
-bind-address: "*"    # 地址绑定
-mode: rule           # 规则模式
-log-level: info      # 日志级别
-ipv6: false          # IPV6开关
+# HTTP 代理端口
+port: 7890
+
+# Socks5 代理端口
+socks-port: 7891
+
+# Redir 透明代理端口（Linux/macOS 常用）
+redir-port: 7892
+
+# 混合端口（HTTP + Socks）
+mixed-port: 7893
+
+# 允许局域网设备连接
+allow-lan: true
+
+# 绑定所有网卡
+bind-address: "*"
+
+# 规则模式（按 rules 分流）
+mode: rule
+
+# 日志等级
+log-level: info
+
+# 是否启用 IPv6
+ipv6: false
+
+# Clash 外部控制 API
 external-controller: 127.0.0.1:9090
 
+#================ DNS 配置 ================
+
 dns:
-  enable: true       # 不使用系统 DNS
-  ipv6: false        # 关闭 IPV6
-  listen: 0.0.0.0:53 # dns 监听
+
+  # 开启 Clash DNS
+  enable: true
+
+  # DNS 不使用 IPv6
+  ipv6: false
+
+  # DNS 监听端口
+  listen: 0.0.0.0:53
+
+  # fake-ip 模式（推荐）
   enhanced-mode: fake-ip
+
+  # fake-ip 地址池
   fake-ip-range: 198.18.0.1/16
+
+  # 以下域名不使用 fake-ip
   fake-ip-filter:
+
+    # 局域网
     - "*.lan"
+
+    # QQ 登录
     - localhost.ptlogin2.qq.com
+
+    # Nintendo
     - +.srv.nintendo.net
+
+    # PSN
     - +.stun.playstation.net
+
+    # Xbox
+    - +.xboxlive.com
+
+    # Windows 网络检测
     - +.msftconnecttest.com
     - +.msftncsi.com
-    - +.xboxlive.com
-    - msftconnecttest.com
+
+    # Xbox 微软域名
     - xbox.*.microsoft.com
-    - "*.battlenet.com.cn"
+
+    # 暴雪
     - "*.battlenet.com"
-    - "*.blzstatic.cn"
     - "*.battle.net"
-  nameserver:        # 默认 DNS 服务
+
+  # 国内 DNS
+  nameserver:
     - 223.5.5.5
     - 119.29.29.29
-  fallback:          # 国外 DNS 服务器
+
+  # 国外 DoH DNS
+  fallback:
     - https://cloudflare-dns.com/dns-query
     - https://dns.google/dns-query
-    - https://dns.alidns.com/dns-query
-  fallback-filter:
-    geoip: true
-    geoip-code: CN
-    ipcidr:
-      - 240.0.0.0/4
-#========= 建立锚点 =========#
 
-# 策略组引用
-pr:   &a3 {type: select,   proxies: [♻️ 自动选择, 🚀 手动切换, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇺🇲 美国节点, 🇨🇳 台湾节点, 🇸🇬 狮城节点, DIRECT] }
-p:    &a1 {type: http,     interval: 86400,  health-check: {enable: true, url: http://www.gstatic.com/generate_204, interval: 1800} }
-auto: &a4 {type: url-test, lazy: true,  url: http://www.gstatic.com/generate_204, interval: 900, use: [Sub] }
-use:  &a2 {type: select,   use: [Sub] }
-c:    &a6 {type: http,     behavior: classical, interval: 86400}
-d:    &a5 {type: http,     behavior: domain,    interval: 86400}
-i:    &a7 {type: http,     behavior: ipcidr,    interval: 86400}
+  # fallback 过滤
+  fallback-filter:
+
+    # 国内 IP 不走 fallback
+    geoip: true
+
+    # 中国 GEOIP
+    geoip-code: CN
+
+#================ Sniffer 配置 ================
+
+sniffer:
+
+  # 开启流量嗅探
+  enable: true
+
+  sniff:
+
+    # HTTP 流量嗅探
+    HTTP:
+
+      # 嗅探端口
+      ports:
+        - 80
+        - 8080-8880
+
+    # HTTPS/TLS 流量嗅探
+    TLS:
+
+      # TLS 端口
+      ports:
+        - 443
+        - 8443
+
+#================ YAML 锚点 ================
+
+# 主策略组模板
+pr: &a3
+  type: select
+  proxies:
+    - ♻️ 自动选择
+    - 🇭🇰 香港节点
+    - 🇺🇲 美国节点
+    - 🇯🇵 日本节点
+    - 🇨🇳 台湾节点
+    - DIRECT
+
+# Provider 基础模板
+p: &a1
+  type: http
+  interval: 86400
+
+  health-check:
+
+    # 开启健康检查
+    enable: true
+
+    # 测速 URL
+    url: http://www.gstatic.com/generate_204
+
+    # 检测时间
+    interval: 1800
+
+# 自动测速模板
+auto: &a4
+
+  # url-test 自动测速
+  type: url-test
+
+  # 懒加载测速
+  lazy: true
+
+  # 测速地址
+  url: http://www.gstatic.com/generate_204
+
+  # 测速间隔
+  interval: 900
+
+  # 使用哪个 provider
+  use:
+    - Sub
+
+# 手动选择模板
+use: &a2
+  type: select
+  use:
+    - Sub
+
+# classical 规则模板
+c: &a6
+  type: http
+  behavior: classical
+  interval: 86400
+
+# domain 规则模板
+d: &a5
+  type: http
+  behavior: domain
+  interval: 86400
+
+# ipcidr 规则模板
+i: &a7
+  type: http
+  behavior: ipcidr
+  interval: 86400
+
+#================ 节点订阅 ================
 
 proxy-providers:
+
   Sub:
+
+    # 引用 provider 模板
     <<: *a1
-    url: https://liangxin.xyz/api/v1/liangxin?OwO=1d5b8d8909c277c53a418da6802516d3
-    #默认B-url
+
+    # 机场订阅链接
+    url: ""
+
+    # 本地缓存路径
     path: ./proxy_providers/sub.yaml
-    
-# URL后面填写格式1: 直接填写你的机场Clash订阅[推荐此种方式，避免订阅泄露
-    # URL后面填写格式2[集合订阅]：https://api.nexconvert.com/sub?target=clash&url=请手动填入你的订阅(多机场订阅用|分割即可)&emoji=true&list=true&new_name=true&udp=false
 
+# 不手动写死节点
 proxies: null
+
+#================ 策略组 ================
+
 proxy-groups:
-#分流分组
-  - {name: 🚀 手动切换, <<: *a2}
-  - {name: 🌏 全球加速, <<: *a3}
-  - {name: 🍎 苹果服务, <<: *a3}
-  - {name: 📺 哔哩哔哩, type: select, proxies: [DIRECT, 🇭🇰 香港节点, 🇨🇳 台湾节点]}
-  - {name: 🤖 OpenAi,  type: select, proxies: [🇺🇲 美国节点]}
-  - {name: 🤖 Gemini,  type: select, proxies: [🇨🇳 台湾节点]}
-  - {name: 🇨🇳 金融专用,  type: select, proxies: [🇨🇳 台湾节点]}
-  - {name: 🎬 国际媒体, <<: *a3}
-  - {name: 🌌 谷歌服务, <<: *a3}
-  - {name: 📟 电报消息, <<: *a3}
-  - {name: 🐦 推特服务, <<: *a3}
-  - {name: 🎮 游戏平台, <<: *a3}
-  - {name: 🆎 AdBlock, type: select, proxies: [REJECT]}
-  - {name: 🐟 兜底分流, <<: *a3}
-  
-#节点分组
-  - {name: ♻️ 自动选择, <<: *a4}
-  - {name: 🇭🇰 香港节点, <<: *a4, filter: "港|HK|(?i)Hong"           }             # a4更改为a2，即为手动选择
-  - {name: 🇯🇵 日本节点, <<: *a4, filter: "日|东京|JP|(?i)Japan"     }             # a4更改为a2，即为手动选择     
-  - {name: 🇨🇳 台湾节点, <<: *a4, filter: "台|湾|TW|(?i)Taiwan"      }             # a4更改为a2，即为手动选择
-  - {name: 🇺🇲 美国节点, <<: *a4, filter: "美|US|(?i)States|American"}             # a4更改为a2，即为手动选择
-  - {name: 🇸🇬 狮城节点, <<: *a4, filter: "新|坡|SG|(?i)Singapore"    }            # a4更改为a2，即为手动选择
 
-# 分流规则 
+#============ 主策略 ============
+
+  # 手动节点切换
+  - name: 🚀 手动切换
+    <<: *a2
+
+  # 全局国外服务
+  - name: 🌍 国外服务
+    type: select
+    proxies:
+      - ♻️ 自动选择
+      - 🇭🇰 香港节点
+      - 🇺🇲 美国节点
+      - 🇯🇵 日本节点
+      - 🇨🇳 台湾节点
+      - DIRECT
+
+#============ AI ============
+
+  # AI 总策略组
+  - name: 🤖 AI服务
+    type: select
+    proxies:
+      - 🇺🇲 美国节点
+      - 🇭🇰 香港节点
+
+  # OpenAI
+  - name: 🤖 OpenAI
+    type: select
+    proxies:
+      - 🇺🇲 美国节点
+
+  # Gemini
+  - name: 🤖 Gemini
+    type: select
+    proxies:
+      - 🇺🇲 美国节点
+
+  # Claude
+  - name: 🤖 Claude
+    type: select
+    proxies:
+      - 🇺🇲 美国节点
+
+#============ 交易所 ============
+
+  # OKX 固定台湾
+  - name: 💰 OKX
+    type: select
+    proxies:
+      - 🇨🇳 台湾节点
+
+  # Binance 直连
+  - name: 💰 Binance
+    type: select
+    proxies:
+      - DIRECT
+
+#============ 社交 ============
+
+  # X / XChat 固定香港
+  - name: 🐦 X服务
+    type: select
+    proxies:
+      - 🇭🇰 香港节点
+
+  # Telegram 香港优先
+  - name: 📟 Telegram
+    type: select
+    proxies:
+      - 🇭🇰 香港节点
+      - ♻️ 自动选择
+
+#============ 视频 ============
+
+  # YouTube
+  - name: 📺 YouTube
+    type: select
+    proxies:
+      - 🇭🇰 香港节点
+      - 🇺🇲 美国节点
+
+  # 国外媒体
+  - name: 🎬 国际媒体
+    type: select
+    proxies:
+      - 🇺🇲 美国节点
+      - 🇭🇰 香港节点
+
+#============ 设计 ============
+
+  # Behance 走日本
+  - name: 🎨 Behance
+    type: select
+    proxies:
+      - 🇯🇵 日本节点
+
+#============ 苹果服务 ============
+
+  # 苹果服务
+  - name: 🍎 苹果服务
+    type: select
+    proxies:
+      - DIRECT
+      - 🇭🇰 香港节点
+
+#============ 广告 ============
+
+  # 广告拦截
+  - name: 🆎 AdBlock
+    type: select
+    proxies:
+      - REJECT
+
+#============ 漏网 ============
+
+  # 未匹配规则流量
+  - name: 🐟 漏网之鱼
+    type: select
+    proxies:
+      - ♻️ 自动选择
+      - 🇭🇰 香港节点
+      - 🇺🇲 美国节点
+      - DIRECT
+
+#============ 节点组 ============
+
+  # 自动测速节点
+  - name: ♻️ 自动选择
+    <<: *a4
+
+  # 香港节点筛选
+  - name: 🇭🇰 香港节点
+    <<: *a4
+    filter: "港|HK|(?i)Hong"
+
+  # 日本节点筛选
+  - name: 🇯🇵 日本节点
+    <<: *a4
+    filter: "日|JP|(?i)Japan|Tokyo"
+
+  # 台湾节点筛选
+  - name: 🇨🇳 台湾节点
+    <<: *a4
+    filter: "台|TW|(?i)Taiwan"
+
+  # 美国节点筛选
+  - name: 🇺🇲 美国节点
+    <<: *a4
+    filter: "美|US|(?i)States|America"
+
+#================ Rule Provider ================
+
 rule-providers:
-  Ad:          {<<: *a5, url: https://raw.githubusercontent.com/Cats-Team/AdRules/main/adrules_domainset.txt,                                     path: ./RuleSet/anti-ad-clash.yaml}
-  Binance:     {<<: *a6, url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Binance/Binance.yaml,   path: ./RuleSet/Binance.yaml      }
-  OKX:         {<<: *a6, url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/OKX/OKX.yaml,           path: ./RuleSet/OKX.yaml          }
-  Gemini:      {<<: *a6, url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Gemini/Gemini.yaml,     path: ./RuleSet/Gemini.yaml       }
-  OpenAi:      {<<: *a6, url: https://gist.githubusercontent.com/ddgksf2013/cb4121e8b5c5d865cc949cb8120320c4/raw/Ai.yaml,                         path: ./RuleSet/OpenAi.yaml       }
-  BiliBili:    {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/BiliBili/BiliBili.yaml,                  path: ./RuleSet/BiliBili.yaml     }
-  Bahamut:     {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Bahamut/Bahamut.yaml,                    path: ./RuleSet/Bahamut.yaml      } 
-  GlobalMedia: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GlobalMedia/GlobalMedia_Classical.yaml,  path: ./RuleSet/GlobalMedia.yaml  }
-  Apple:       {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Apple/Apple_Classical.yaml,              path: ./RuleSet/Apple.yaml        }
-  Github:      {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GitHub/GitHub.yaml,                      path: ./RuleSet/Github.yaml       }
-  Microsoft:   {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Microsoft/Microsoft.yaml,                path: ./RuleSet/Microsoft.yaml    }
-  Google:      {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Google/Google.yaml,                      path: ./RuleSet/Google.yaml       }
-  Telegram:    {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Telegram/Telegram.yaml,                  path: ./RuleSet/Telegram.yaml     }
-  Twitter:     {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Twitter/Twitter.yaml,                    path: ./RuleSet/Twitter.yaml      }
-  Game:        {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Game/Game.yaml,                          path: ./RuleSet/Game.yaml         }
-  ProxyLite:   {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/ProxyLite/ProxyLite.yaml,                path: ./RuleSet/ProxyLite.yaml    }
-  Direct:      {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Direct/Direct.yaml,                      path: ./RuleSet/Direct.yaml       }
-  Lan:         {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Lan/Lan.yaml,                            path: ./RuleSet/Lan.yaml          }
-  Download:    {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Download/Download.yaml,                  path: ./RuleSet/Download.yaml     }
-  ChinaIP:     {<<: *a7, url: https://cdn.jsdelivr.net/gh/soffchen/GeoIP2-CN@release/clash-rule-provider.yml,                                     path: ./RuleSet/ChinaIP.yaml      }
 
+  # 广告规则
+  Ad:
+    <<: *a5
+    url: "https://raw.githubusercontent.com/Cats-Team/AdRules/main/adrules_domainset.txt"
+    path: ./RuleSet/Ad.yaml
 
-# 分流Policy 
+  # OpenAI
+  OpenAi:
+    <<: *a6
+    url: "https://gist.githubusercontent.com/ddgksf2013/cb4121e8b5c5d865cc949cb8120320c4/raw/Ai.yaml"
+    path: ./RuleSet/OpenAi.yaml
+
+  # Gemini
+  Gemini:
+    <<: *a6
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Gemini/Gemini.yaml"
+    path: ./RuleSet/Gemini.yaml
+
+  # Claude
+  Claude:
+    <<: *a6
+    url: ""
+    path: ./RuleSet/Claude.yaml
+
+  # Binance
+  Binance:
+    <<: *a6
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Binance/Binance.yaml"
+    path: ./RuleSet/Binance.yaml
+
+  # OKX
+  OKX:
+    <<: *a6
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/OKX/OKX.yaml"
+    path: ./RuleSet/OKX.yaml
+
+  # Twitter / X
+  Twitter:
+    <<: *a6
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Twitter/Twitter.yaml"
+    path: ./RuleSet/Twitter.yaml
+
+  # Telegram
+  Telegram:
+    <<: *a6
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Telegram/Telegram.yaml"
+    path: ./RuleSet/Telegram.yaml
+
+  # YouTube
+  YouTube:
+    <<: *a6
+    url: ""
+    path: ./RuleSet/YouTube.yaml
+
+  # 国际媒体
+  GlobalMedia:
+    <<: *a6
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GlobalMedia/GlobalMedia_Classical.yaml"
+    path: ./RuleSet/GlobalMedia.yaml
+
+  # Apple
+  Apple:
+    <<: *a6
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Apple/Apple_Classical.yaml"
+    path: ./RuleSet/Apple.yaml
+
+  # Github
+  Github:
+    <<: *a6
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GitHub/GitHub.yaml"
+    path: ./RuleSet/Github.yaml
+
+  # Google
+  Google:
+    <<: *a6
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Google/Google.yaml"
+    path: ./RuleSet/Google.yaml
+
+  # 国外代理
+  ProxyLite:
+    <<: *a6
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/ProxyLite/ProxyLite.yaml"
+    path: ./RuleSet/ProxyLite.yaml
+
+  # Behance
+  Behance:
+    <<: *a6
+    url: ""
+    path: ./RuleSet/Behance.yaml
+
+  # 国内直连
+  Direct:
+    <<: *a6
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Direct/Direct.yaml"
+    path: ./RuleSet/Direct.yaml
+
+  # 局域网
+  Lan:
+    <<: *a6
+    url: ""
+    path: ./RuleSet/Lan.yaml
+
+  # 中国 IP
+  ChinaIP:
+    <<: *a7
+    url: "https://cdn.jsdelivr.net/gh/soffchen/GeoIP2-CN@release/clash-rule-provider.yml"
+    path: ./RuleSet/ChinaIP.yaml
+
+#================ Rules ================
+
 rules:
- # 币安核心域名
+
+  # 广告拦截
   - RULE-SET,Ad,🆎 AdBlock
-  - RULE-SET,Binance,DIRECT
-  - RULE-SET,OKX,🇨🇳 金融专用
-  - RULE-SET,OpenAi,🤖 OpenAi
+
+  # OpenAI
+  - RULE-SET,OpenAi,🤖 OpenAI
+
+  # Gemini
   - RULE-SET,Gemini,🤖 Gemini
-  - RULE-SET,BiliBili,📺 哔哩哔哩
-  - RULE-SET,Bahamut,📺 哔哩哔哩
+
+  # Claude
+  - RULE-SET,Claude,🤖 Claude
+
+  # Binance 直连
+  - RULE-SET,Binance,DIRECT
+
+  # OKX 台湾
+  - RULE-SET,OKX,💰 OKX
+
+  # X / XChat 香港
+  - RULE-SET,Twitter,🐦 X服务
+
+  # Telegram
+  - RULE-SET,Telegram,📟 Telegram
+
+  # YouTube
+  - RULE-SET,YouTube,📺 YouTube
+
+  # Behance
+  - RULE-SET,Behance,🎨 Behance
+
+  # 国际媒体
   - RULE-SET,GlobalMedia,🎬 国际媒体
+
+  # Apple
   - RULE-SET,Apple,🍎 苹果服务
-  - RULE-SET,Github,🌏 全球加速
-  - RULE-SET,Microsoft, 🌏 全球加速
-  - RULE-SET,Google,🌌 谷歌服务
-  - RULE-SET,Telegram,📟 电报消息
-  - RULE-SET,Twitter,🇭🇰 香港节点
-  - RULE-SET,Game,🎮 游戏平台
-  - RULE-SET,ProxyLite,🌏 全球加速
+
+  # Github
+  - RULE-SET,Github,🌍 国外服务
+
+  # Google
+  - RULE-SET,Google,🌍 国外服务
+
+  # 其它国外网站
+  - RULE-SET,ProxyLite,🌍 国外服务
+
+  # 国内直连
   - RULE-SET,Direct,DIRECT
+
+  # 局域网直连
   - RULE-SET,Lan,DIRECT
-  - RULE-SET,Download,DIRECT
+
+  # 中国 IP 直连
   - RULE-SET,ChinaIP,DIRECT
+
+  # 中国 GEOIP 直连
   - GEOIP,CN,DIRECT
-  - MATCH,🐟 兜底分流
 
-
-# TUN模式是通过在操作系统上安装一个虚拟网卡来实现的，它可以接管所有的网络流量，并将流量转发至Clash，然后由Clash发出请求
-# Windows 系统中如何启用TUN模式
-# 1、运行 Clash For Windows, 确保使用规则模式，并可以联网
-# 2、点击 General中的Service Mode右侧的Manage按钮，在弹出窗口中选择schtasks，安装服务模式。安装完成后，应用程序会自动重启，Service Mode右侧的地球图标变为绿色表示安装成功
-# 3、点击 General中的TUN Mode右侧的开关以启动TUN模式
-# 本配置来源：@ddgksf2013，本人建仓主要用于PE/PC端同步使用，根据自己分流需求做了修改，需要使用配置建议从@ddgksf2013获取
+  # 最终漏网规则
+  - MATCH,🐟 漏网之鱼
