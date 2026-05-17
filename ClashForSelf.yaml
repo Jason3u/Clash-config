@@ -1,6 +1,6 @@
 #==========================================
 # @ConfigName        Jason 自用完整分流配置
-# @UpdateTime        2026/05/18/1:23
+# @UpdateTime        2026/05/18/1:26
 #==========================================
 
 # 端口
@@ -36,7 +36,7 @@ proxy-providers:
       enable: true
       url: http://www.gstatic.com/generate_204
       interval: 1800
-  url:https://liangxin.xyz/api/v1/liangxin?OwO=08473de9c81c32890fb3c8744ba74b5b
+    url: https://liangxin.xyz/api/v1/liangxin?OwO=1d5b8d8909c277c53a418da6802516d3
     path: ./proxy_providers/sub.yaml
 
 proxies: null
