@@ -4,7 +4,9 @@
 
 ## 使用
 
-- 配置文件：[ClashForSelf.yaml](./ClashForSelf.yaml)，订阅导入该文件即可
+- 订阅 URL（客户端「配置 URL」填这个，注意不要用 GitHub 网页链接 /blob/ 链接，否则会报 yaml 解析错误）：
+  - https://raw.githubusercontent.com/Jason3u/Clash-config/main/ClashForSelf.yaml
+  - GitHub 访问不畅时用：https://cdn.jsdelivr.net/gh/Jason3u/Clash-config@main/ClashForSelf.yaml
 - 需要 **Meta 内核（mihomo）**：订阅为 VLESS 节点，原版 Clash 内核不支持
   - PC：Clash Verge Rev / Mihomo Party
   - Android：ClashMetaForAndroid
