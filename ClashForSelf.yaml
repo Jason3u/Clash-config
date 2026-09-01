@@ -1,20 +1,33 @@
-#==========================================
-# @ConfigName        Jason 自用完整分流配置
-# @UpdateTime        2026/05/18/1:26
-#==========================================
+# ============================================================
+#  Clash 配置 · Jason3u（由 Quantumult X qx-public.conf 逐条转换）
+#  适用于 PC（Clash Verge Rev / Mihomo Party）与 Android（ClashMetaForAndroid）
+#  需要 Meta 内核（mihomo）：订阅为 VLESS 节点，原版 Clash 内核不支持
+#
+#  分流总览（与 QX 完全一致）：
+#    Apple 核心（AppStore/iCloud 等）  → DIRECT 直连
+#    Apple 外区（AppleTV/AppleNews）   → 兜底分流
+#    AI（GPT/Gemini/Claude/Grok）      → 各自独立策略组
+#    X（Twitter）                      → X（默认香港节点）
+#    Binance 币安                      → Binance（默认国内直连，可手动切友好地区）
+#    其他交易所（OKX/Bybit/Bitget/Gate）→ 各自独立策略组（默认香港住宅IP）
+#    Cornix 自动交易                  → Cornix（固定新加坡地区，区内自动最低延迟）
+#    国内网站                          → DIRECT 直连
+#    其余外网（含流媒体）              → 兜底分流
+#
+#  说明：QX 的去广告/MitM 重写脚本 Clash 无法使用，未迁移
+# ============================================================
 
 # 端口
 port: 7890
 socks-port: 7891
 mixed-port: 7893
-allow-lan: true
-bind-address: "*"
+allow-lan: false        # 如需局域网共享代理，改为 true
 mode: rule
 log-level: info
-ipv6: false
+ipv6: false             # 对应 QX [dns] no-ipv6
 external-controller: 127.0.0.1:9090
 
-# DNS
+# DNS（对应 QX [dns]）
 dns:
   enable: true
   ipv6: false
@@ -23,391 +36,400 @@ dns:
   nameserver:
     - 223.5.5.5
     - 119.29.29.29
-  fallback:
-    - https://cloudflare-dns.com/dns-query
-    - https://dns.google/dns-query
 
-# 机场订阅（！！务必替换成你自己的新订阅链接！！）
+# 机场订阅（对应 QX [server_remote] 良心云）
 proxy-providers:
-  Sub:
+  良心云:
     type: http
     interval: 86400
     health-check:
       enable: true
       url: http://www.gstatic.com/generate_204
-      interval: 1800
-    url: https://liangxin.xyz/api/v1/liangxin?OwO=1d5b8d8909c277c53a418da6802516d3
-    path: ./proxy_providers/sub.yaml
+      interval: 1200
+    url: https://liangxin.xyz/api/v1/liangxin?OwO=08473de9c81c32890fb3c8744ba74b5b
+    path: ./proxy_providers/liangxin.yaml
 
+# 对应 QX [server_local] 留空
 proxies: null
 
-# 策略组
+# ============================================================
+#  策略组
+# ============================================================
 proxy-groups:
-  # ---- 分流策略组 ----
-  - name: 🚀 手动切换
-    type: select
-    use: [Sub]
-  - name: 🌏 全球加速
-    type: select
-    proxies:
-      - ♻️ 自动选择
-      - 🚀 手动切换
-      - 🇭🇰 香港节点
-      - 🇯🇵 日本节点
-      - 🇺🇸 美国节点
-      - 🇨🇳 台湾节点
-      - 🇸🇬 狮城节点
-      - DIRECT
-  - name: 🍎 苹果服务
-    type: select
-    proxies:
-      - ♻️ 自动选择
-      - 🚀 手动切换
-      - 🇭🇰 香港节点
-      - 🇯🇵 日本节点
-      - 🇺🇸 美国节点
-      - 🇨🇳 台湾节点
-      - 🇸🇬 狮城节点
-      - DIRECT
-  - name: 📺 哔哩哔哩
-    type: select
-    proxies:
-      - DIRECT
-      - 🇭🇰 香港节点
-      - 🇨🇳 台湾节点
-  - name: 🤖 OpenAi
-    type: select
-    proxies:
-      - 🇺🇸 美国节点
-  - name: 🤖 Gemini
-    type: select
-    proxies:
-      - 🇨🇳 台湾节点
-  - name: 🤖 Claude
-    type: select
-    proxies:
-      - 🇺🇸 美国节点
-  - name: 🖥 Behance
-    type: select
-    proxies:
-      - 🇯🇵 日本节点
-  - name: 👥 社交网络
-    type: select
-    proxies:
-      - 🇭🇰 香港节点
-      - 🇺🇸 美国节点
-      - 🚀 手动切换
-  - name: 🇨🇳 金融专用
-    type: select
-    proxies:
-      - 🇨🇳 台湾节点
-  - name: 🎬 国际媒体
-    type: select
-    proxies:
-      - ♻️ 自动选择
-      - 🚀 手动切换
-      - 🇭🇰 香港节点
-      - 🇯🇵 日本节点
-      - 🇺🇸 美国节点
-      - 🇨🇳 台湾节点
-      - 🇸🇬 狮城节点
-      - DIRECT
-  - name: 🌌 谷歌服务
-    type: select
-    proxies:
-      - 🇭🇰 香港节点
-      - ♻️ 自动选择
-      - 🚀 手动切换
-  - name: 📟 电报消息
-    type: select
-    proxies:
-      - 🇭🇰 香港节点
-      - ♻️ 自动选择
-      - 🚀 手动切换
-  - name: 🐦 推特服务
-    type: select
-    proxies:
-      - 🇭🇰 香港节点
-  - name: 🎮 游戏平台
-    type: select
-    proxies:
-      - ♻️ 自动选择
-      - 🚀 手动切换
-      - 🇭🇰 香港节点
-      - 🇯🇵 日本节点
-      - 🇺🇸 美国节点
-      - 🇨🇳 台湾节点
-      - 🇸🇬 狮城节点
-      - DIRECT
-  - name: 🐟 兜底分流
-    type: select
-    proxies:
-      - ♻️ 自动选择
-      - 🚀 手动切换
-      - DIRECT
+  # ---------- 节点池（url-test 自动测速，对应 QX url-latency-benchmark，check-interval=1200, tolerance=0） ----------
+  - name: 自动选择
+    type: url-test
+    url: http://www.gstatic.com/generate_204
+    interval: 1200
+    tolerance: 0
+    use: [良心云]
+  - name: 美国节点
+    type: url-test
+    url: http://www.gstatic.com/generate_204
+    interval: 1200
+    tolerance: 0
+    use: [良心云]
+    filter: "美国|美|US|(?i)States|American"
+  - name: 日本节点
+    type: url-test
+    url: http://www.gstatic.com/generate_204
+    interval: 1200
+    tolerance: 0
+    use: [良心云]
+    filter: "日本|JP|(?i)Japan|东京|大阪"
+  - name: 新加坡节点
+    type: url-test
+    url: http://www.gstatic.com/generate_204
+    interval: 1200
+    tolerance: 0
+    use: [良心云]
+    filter: "新加坡|狮城|SG|(?i)Singapore"
+  - name: 英国节点
+    type: url-test
+    url: http://www.gstatic.com/generate_204
+    interval: 1200
+    tolerance: 0
+    use: [良心云]
+    filter: "英国|英|UK|(?i)Britain|London"
+  - name: 韩国节点
+    type: url-test
+    url: http://www.gstatic.com/generate_204
+    interval: 1200
+    tolerance: 0
+    use: [良心云]
+    filter: "韩国|韩|KR|(?i)Korea|首尔"
+  - name: 台湾节点
+    type: url-test
+    url: http://www.gstatic.com/generate_204
+    interval: 1200
+    tolerance: 0
+    use: [良心云]
+    filter: "台湾|TW|(?i)Taiwan|台北"
+  - name: 香港节点
+    type: url-test
+    url: http://www.gstatic.com/generate_204
+    interval: 1200
+    tolerance: 0
+    use: [良心云]
+    filter: "香港|港|HK|(?i)Hong"
+  - name: 香港住宅IP
+    type: url-test
+    url: http://www.gstatic.com/generate_204
+    interval: 1200
+    tolerance: 0
+    use: [良心云]
+    filter: "住宅"
 
-  # ---- 节点分组（自动测速） ----
-  - name: ♻️ 自动选择
-    type: url-test
-    lazy: true
-    url: http://www.gstatic.com/generate_204
-    interval: 900
-    use: [Sub]
-  - name: 🇭🇰 香港节点
-    type: url-test
-    lazy: true
-    url: http://www.gstatic.com/generate_204
-    interval: 900
-    use: [Sub]
-    filter: "港|HK|(?i)Hong"
-  - name: 🇯🇵 日本节点
-    type: url-test
-    lazy: true
-    url: http://www.gstatic.com/generate_204
-    interval: 900
-    use: [Sub]
-    filter: "日|东京|JP|(?i)Japan"
-  - name: 🇨🇳 台湾节点
-    type: url-test
-    lazy: true
-    url: http://www.gstatic.com/generate_204
-    interval: 900
-    use: [Sub]
-    filter: "台|湾|TW|(?i)Taiwan"
-  - name: 🇺🇸 美国节点
-    type: url-test
-    lazy: true
-    url: http://www.gstatic.com/generate_204
-    interval: 900
-    use: [Sub]
-    filter: "美|US|(?i)States|American"
-  - name: 🇸🇬 狮城节点
-    type: url-test
-    lazy: true
-    url: http://www.gstatic.com/generate_204
-    interval: 900
-    use: [Sub]
-    filter: "新|坡|SG|(?i)Singapore"
+  # ---------- 手动切换（对应 QX static 组内 proxy 选项：手动指定单个节点） ----------
+  - name: 手动切换
+    type: select
+    use: [良心云]
 
-# 分流规则集（全部来自 blackmatrix7 仓库）
+  # ---------- 兜底分流：未命中规则的外网流量（含流媒体）最终出口 ----------
+  - name: 兜底分流
+    type: select
+    proxies:
+      - 自动选择
+      - 美国节点
+      - 日本节点
+      - 新加坡节点
+      - 英国节点
+      - 韩国节点
+      - 台湾节点
+      - 香港节点
+      - DIRECT
+      - 手动切换
+
+  # ---------- AI：每个服务独立策略组（手动选地区，规避 IP 跳变风控） ----------
+  - name: OpenAI
+    type: select
+    proxies:
+      - 美国节点
+      - 日本节点
+      - 新加坡节点
+      - 英国节点
+      - 韩国节点
+      - 台湾节点
+  - name: Gemini
+    type: select
+    proxies:
+      - 美国节点
+      - 日本节点
+      - 新加坡节点
+      - 英国节点
+      - 韩国节点
+      - 台湾节点
+  - name: Claude
+    type: select
+    proxies:
+      - 美国节点
+      - 日本节点
+      - 新加坡节点
+      - 英国节点
+      - 韩国节点
+      - 台湾节点
+  - name: Grok
+    type: select
+    proxies:
+      - 美国节点
+      - 日本节点
+      - 新加坡节点
+      - 英国节点
+      - 韩国节点
+      - 台湾节点
+
+  # ---------- X：默认香港节点（规避风控） ----------
+  - name: X
+    type: select
+    proxies:
+      - 香港节点
+
+  # ---------- Binance 币安：默认国内直连，可手动切友好地区（按友好排名） ----------
+  - name: Binance
+    type: select
+    proxies:
+      - DIRECT
+      - 香港住宅IP
+      - 香港节点
+      - 日本节点
+      - 新加坡节点
+      - 台湾节点
+      - 韩国节点
+
+  # ---------- OKX 欧易：默认香港住宅IP（规避风控） ----------
+  - name: OKX
+    type: select
+    proxies:
+      - 香港住宅IP
+      - 香港节点
+      - 日本节点
+      - 新加坡节点
+      - 台湾节点
+      - 韩国节点
+
+  # ---------- Bybit：默认香港住宅IP（官方禁止大陆，需代理） ----------
+  - name: Bybit
+    type: select
+    proxies:
+      - 香港住宅IP
+      - 香港节点
+      - 日本节点
+      - 新加坡节点
+      - 台湾节点
+      - 韩国节点
+
+  # ---------- Bitget：默认香港住宅IP（官方禁止大陆，需代理） ----------
+  - name: Bitget
+    type: select
+    proxies:
+      - 香港住宅IP
+      - 香港节点
+      - 日本节点
+      - 新加坡节点
+      - 台湾节点
+      - 韩国节点
+
+  # ---------- Gate：默认香港住宅IP（官方禁止大陆，需代理） ----------
+  - name: Gate
+    type: select
+    proxies:
+      - 香港住宅IP
+      - 香港节点
+      - 日本节点
+      - 新加坡节点
+      - 台湾节点
+      - 韩国节点
+
+  # ---------- Cornix：固定新加坡地区，节点由新加坡节点测速组自动选择最低延迟 ----------
+  - name: Cornix
+    type: select
+    proxies:
+      - 新加坡节点
+
+# ============================================================
+#  分流规则集（对应 QX [filter_remote]，blackmatrix7 Clash 版）
+# ============================================================
 rule-providers:
-  # 交易所
-  Binance:
-    type: http
-    behavior: classical
-    interval: 86400
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Binance/Binance.yaml
-    path: ./RuleSet/Binance.yaml
-  OKX:
-    type: http
-    behavior: classical
-    interval: 86400
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/OKX/OKX.yaml
-    path: ./RuleSet/OKX.yaml
-  # AI 工具
-  OpenAI:
-    type: http
-    behavior: classical
-    interval: 86400
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/OpenAI/OpenAI.yaml
-    path: ./RuleSet/OpenAI.yaml
-  Gemini:
-    type: http
-    behavior: classical
-    interval: 86400
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Gemini/Gemini.yaml
-    path: ./RuleSet/Gemini.yaml
-  Claude:
-    type: http
-    behavior: classical
-    interval: 86400
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Claude/Claude.yaml
-    path: ./RuleSet/Claude.yaml
-  # 社交媒体
-  Twitter:
-    type: http
-    behavior: classical
-    interval: 86400
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Twitter/Twitter.yaml
-    path: ./RuleSet/Twitter.yaml
-  Telegram:
-    type: http
-    behavior: classical
-    interval: 86400
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Telegram/Telegram.yaml
-    path: ./RuleSet/Telegram.yaml
-  TikTok:
-    type: http
-    behavior: classical
-    interval: 86400
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/TikTok/TikTok.yaml
-    path: ./RuleSet/TikTok.yaml
-  Instagram:
-    type: http
-    behavior: classical
-    interval: 86400
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Instagram/Instagram.yaml
-    path: ./RuleSet/Instagram.yaml
-  Reddit:
-    type: http
-    behavior: classical
-    interval: 86400
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Reddit/Reddit.yaml
-    path: ./RuleSet/Reddit.yaml
-  Discord:
-    type: http
-    behavior: classical
-    interval: 86400
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Discord/Discord.yaml
-    path: ./RuleSet/Discord.yaml
-  Facebook:
-    type: http
-    behavior: classical
-    interval: 86400
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Facebook/Facebook.yaml
-    path: ./RuleSet/Facebook.yaml
-  Tumblr:
-    type: http
-    behavior: classical
-    interval: 86400
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Tumblr/Tumblr.yaml
-    path: ./RuleSet/Tumblr.yaml
-  Threads:
-    type: http
-    behavior: classical
-    interval: 86400
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Threads/Threads.yaml
-    path: ./RuleSet/Threads.yaml
-  Snapchat:
-    type: http
-    behavior: classical
-    interval: 86400
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Snapchat/Snapchat.yaml
-    path: ./RuleSet/Snapchat.yaml
-  # 视频 / 媒体
-  BiliBili:
-    type: http
-    behavior: classical
-    interval: 86400
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/BiliBili/BiliBili.yaml
-    path: ./RuleSet/BiliBili.yaml
-  Bahamut:
-    type: http
-    behavior: classical
-    interval: 86400
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Bahamut/Bahamut.yaml
-    path: ./RuleSet/Bahamut.yaml
-  GlobalMedia:
-    type: http
-    behavior: classical
-    interval: 86400
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GlobalMedia/GlobalMedia_Classical.yaml
-    path: ./RuleSet/GlobalMedia.yaml
-  # 系统 / 工具
+  # ---------- Apple 核心 → 直连 ----------
   Apple:
     type: http
     behavior: classical
+    format: yaml
     interval: 86400
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Apple/Apple_Classical.yaml
-    path: ./RuleSet/Apple.yaml
-  Github:
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Apple/Apple.yaml
+    path: ./ruleset/Apple.yaml
+  iCloud:
     type: http
     behavior: classical
+    format: yaml
     interval: 86400
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GitHub/GitHub.yaml
-    path: ./RuleSet/Github.yaml
-  Microsoft:
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/iCloud/iCloud.yaml
+    path: ./ruleset/iCloud.yaml
+  AppStore:
     type: http
     behavior: classical
+    format: yaml
     interval: 86400
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Microsoft/Microsoft.yaml
-    path: ./RuleSet/Microsoft.yaml
-  Google:
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/AppStore/AppStore.yaml
+    path: ./ruleset/AppStore.yaml
+  AppleMusic:
     type: http
     behavior: classical
+    format: yaml
     interval: 86400
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Google/Google.yaml
-    path: ./RuleSet/Google.yaml
-  Game:
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/AppleMusic/AppleMusic.yaml
+    path: ./ruleset/AppleMusic.yaml
+  # ---------- Apple 外区 → 兜底分流 ----------
+  AppleNews:
     type: http
     behavior: classical
+    format: yaml
     interval: 86400
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Game/Game.yaml
-    path: ./RuleSet/Game.yaml
-  ProxyLite:
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/AppleNews/AppleNews.yaml
+    path: ./ruleset/AppleNews.yaml
+  AppleTV:
     type: http
     behavior: classical
+    format: yaml
     interval: 86400
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/ProxyLite/ProxyLite.yaml
-    path: ./RuleSet/ProxyLite.yaml
-  # 直连
-  Direct:
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/AppleTV/AppleTV.yaml
+    path: ./ruleset/AppleTV.yaml
+  # ---------- AI → 各自策略组 ----------
+  OpenAI:
     type: http
     behavior: classical
+    format: yaml
     interval: 86400
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Direct/Direct.yaml
-    path: ./RuleSet/Direct.yaml
-  Lan:
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/OpenAI/OpenAI.yaml
+    path: ./ruleset/OpenAI.yaml
+  Gemini:
     type: http
     behavior: classical
+    format: yaml
     interval: 86400
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Lan/Lan.yaml
-    path: ./RuleSet/Lan.yaml
-  Download:
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Gemini/Gemini.yaml
+    path: ./ruleset/Gemini.yaml
+  Anthropic:
     type: http
     behavior: classical
+    format: yaml
     interval: 86400
-    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Download/Download.yaml
-    path: ./RuleSet/Download.yaml
-  ChinaIP:
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Anthropic/Anthropic.yaml
+    path: ./ruleset/Anthropic.yaml
+  Claude:
     type: http
-    behavior: ipcidr
+    behavior: classical
+    format: yaml
     interval: 86400
-    url: https://cdn.jsdelivr.net/gh/soffchen/GeoIP2-CN@release/clash-rule-provider.yml
-    path: ./RuleSet/ChinaIP.yaml
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Claude/Claude.yaml
+    path: ./ruleset/Claude.yaml
 
-# 分流规则
+# ============================================================
+#  分流规则（顺序与 QX [filter_remote] + [filter_local] 完全一致）
+#  X/交易所/Cornix 为自建规则（Quantumult-X-Rules 仓库），QX 的 .list
+#  格式 Clash 无法直接引用，已逐条内联转换，内容与仓库保持同步
+# ============================================================
 rules:
-  # 交易所（币安直连，OKX 走台湾）
-  - RULE-SET,Binance,DIRECT
-  - RULE-SET,OKX,🇨🇳 金融专用
-  # AI 工具（各自独立）
-  - RULE-SET,OpenAI,🤖 OpenAi
-  - RULE-SET,Gemini,🤖 Gemini
-  - RULE-SET,Claude,🤖 Claude
-  # Twitter 强制香港
-  - RULE-SET,Twitter,🐦 推特服务
-  # Telegram 优先香港
-  - RULE-SET,Telegram,📟 电报消息
-  # Behance 走日本（直接用域名匹配）
-  - DOMAIN-SUFFIX,behance.net,🖥 Behance
-  # 社交网络合集
-  - RULE-SET,TikTok,👥 社交网络
-  - RULE-SET,Instagram,👥 社交网络
-  - RULE-SET,Reddit,👥 社交网络
-  - RULE-SET,Discord,👥 社交网络
-  - RULE-SET,Facebook,👥 社交网络
-  - RULE-SET,Tumblr,👥 社交网络
-  - RULE-SET,Threads,👥 社交网络
-  - RULE-SET,Snapchat,👥 社交网络
-  # 视频 / 动漫
-  - RULE-SET,BiliBili,📺 哔哩哔哩
-  - RULE-SET,Bahamut,📺 哔哩哔哩
-  - RULE-SET,GlobalMedia,🎬 国际媒体
-  # 系统服务
-  - RULE-SET,Apple,🍎 苹果服务
-  - RULE-SET,Github,🌏 全球加速
-  - RULE-SET,Microsoft,🌏 全球加速
-  - RULE-SET,Google,🌌 谷歌服务
-  # 游戏
-  - RULE-SET,Game,🎮 游戏平台
-  # 轻量代理
-  - RULE-SET,ProxyLite,🌏 全球加速
-  # 直连规则
-  - RULE-SET,Direct,DIRECT
-  - RULE-SET,Lan,DIRECT
-  - RULE-SET,Download,DIRECT
-  - RULE-SET,ChinaIP,DIRECT
+  # ---------- Apple 核心 → 直连 ----------
+  - RULE-SET,Apple,DIRECT
+  - RULE-SET,iCloud,DIRECT
+  - RULE-SET,AppStore,DIRECT
+  - RULE-SET,AppleMusic,DIRECT
+  # ---------- Apple 外区 → 兜底分流 ----------
+  - RULE-SET,AppleNews,兜底分流
+  - RULE-SET,AppleTV,兜底分流
+  # ---------- AI → 各自策略组 ----------
+  - RULE-SET,OpenAI,OpenAI
+  - RULE-SET,Gemini,Gemini
+  - RULE-SET,Anthropic,Claude
+  - RULE-SET,Claude,Claude
+  # ---------- X（Twitter）→ X（自建规则，已剔除 grok） ----------
+  - DOMAIN-SUFFIX,ads-twitter.com,X
+  - DOMAIN-SUFFIX,cms-twdigitalassets.com,X
+  - DOMAIN-SUFFIX,periscope.tv,X
+  - DOMAIN-SUFFIX,pscp.tv,X
+  - DOMAIN-SUFFIX,t.co,X
+  - DOMAIN-SUFFIX,tellapart.com,X
+  - DOMAIN-SUFFIX,tweetdeck.com,X
+  - DOMAIN-SUFFIX,twimg.co,X
+  - DOMAIN-SUFFIX,twimg.com,X
+  - DOMAIN-SUFFIX,twimg.org,X
+  - DOMAIN-SUFFIX,twitpic.com,X
+  - DOMAIN-SUFFIX,twitter.biz,X
+  - DOMAIN-SUFFIX,twitter.jp,X
+  - DOMAIN-SUFFIX,twitter.com,X
+  - DOMAIN-SUFFIX,twittercommunity.com,X
+  - DOMAIN-SUFFIX,twitterflightschool.com,X
+  - DOMAIN-SUFFIX,twitterinc.com,X
+  - DOMAIN-SUFFIX,twitteroauth.com,X
+  - DOMAIN-SUFFIX,twitterstat.us,X
+  - DOMAIN-SUFFIX,twtrdns.net,X
+  - DOMAIN-SUFFIX,twttr.com,X
+  - DOMAIN-SUFFIX,twttr.net,X
+  - DOMAIN-SUFFIX,twvid.com,X
+  - DOMAIN-SUFFIX,vine.co,X
+  - DOMAIN-SUFFIX,x.com,X
+  - DOMAIN-KEYWORD,twitter,X
+  - IP-CIDR,192.133.76.0/22,X,no-resolve
+  - IP-CIDR,199.59.148.0/22,X,no-resolve
+  - IP-CIDR,199.96.56.0/21,X,no-resolve
+  - IP-CIDR,202.160.128.0/22,X,no-resolve
+  - IP-CIDR,209.237.192.0/19,X,no-resolve
+  - IP-CIDR,69.195.160.0/19,X,no-resolve
+  # ---------- Binance 币安（自建规则） ----------
+  - DOMAIN-SUFFIX,binance.com,Binance
+  - DOMAIN-SUFFIX,binance.vision,Binance
+  - DOMAIN-SUFFIX,binance.org,Binance
+  - DOMAIN-SUFFIX,binance.me,Binance
+  - DOMAIN-SUFFIX,binance.cloud,Binance
+  - DOMAIN-SUFFIX,binancecnt.com,Binance
+  - DOMAIN-SUFFIX,binancefuture.com,Binance
+  - DOMAIN-SUFFIX,binancezh.com,Binance
+  - DOMAIN-SUFFIX,bnbstatic.com,Binance
+  - DOMAIN-SUFFIX,bnbchain.org,Binance
+  - DOMAIN-SUFFIX,bnappzh.co,Binance
+  - DOMAIN-SUFFIX,bnbzh.ac,Binance
+  - DOMAIN-SUFFIX,bntrace.com,Binance
+  - DOMAIN-SUFFIX,saasexch.cc,Binance
+  - DOMAIN-SUFFIX,saasexch.com,Binance
+  - DOMAIN-SUFFIX,bscscan.com,Binance
+  # ---------- OKX 欧易（自建规则） ----------
+  - DOMAIN-SUFFIX,okx.com,OKX
+  - DOMAIN-SUFFIX,okex.com,OKX
+  - DOMAIN-SUFFIX,oklink.com,OKX
+  - DOMAIN-SUFFIX,okxcdn.com,OKX
+  # ---------- Bybit（自建规则） ----------
+  - DOMAIN-SUFFIX,bybit.com,Bybit
+  - DOMAIN-SUFFIX,bybitglobal.com,Bybit
+  - DOMAIN-SUFFIX,bybit.nl,Bybit
+  - DOMAIN-SUFFIX,bytick.com,Bybit
+  - DOMAIN-SUFFIX,bybits.com,Bybit
+  - DOMAIN-SUFFIX,bybit.sg,Bybit
+  # ---------- Bitget（自建规则） ----------
+  - DOMAIN-SUFFIX,bitget.com,Bitget
+  - DOMAIN-SUFFIX,bitget.site,Bitget
+  - DOMAIN-SUFFIX,bitget.info,Bitget
+  - DOMAIN-SUFFIX,bitget.io,Bitget
+  - DOMAIN-SUFFIX,bitget.cc,Bitget
+  - DOMAIN-SUFFIX,bitget.cloud,Bitget
+  # ---------- Gate（自建规则） ----------
+  - DOMAIN-SUFFIX,gate.io,Gate
+  - DOMAIN-SUFFIX,gate.com,Gate
+  - DOMAIN-SUFFIX,gateio.com,Gate
+  - DOMAIN-SUFFIX,gateio.fi,Gate
+  - DOMAIN-SUFFIX,gate.it,Gate
+  # ---------- Cornix 自动交易 → 固定新加坡地区（区内最低延迟） ----------
+  - DOMAIN-SUFFIX,cornix.io,Cornix
+  # ---------- 内网直连 ----------
+  - IP-CIDR,10.0.0.0/8,DIRECT,no-resolve
+  - IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
+  - IP-CIDR,172.16.0.0/12,DIRECT,no-resolve
+  - IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
+  - IP-CIDR,169.254.0.0/16,DIRECT,no-resolve
+  - IP-CIDR,224.0.0.0/24,DIRECT,no-resolve
+  # ---------- Grok（xAI） ----------
+  - DOMAIN-SUFFIX,grok.com,Grok
+  - DOMAIN-SUFFIX,x.ai,Grok
+  # ---------- 国内直连 + 兜底 ----------
   - GEOIP,CN,DIRECT
-  # 兜底
-  - MATCH,🐟 兜底分流
+  - MATCH,兜底分流
