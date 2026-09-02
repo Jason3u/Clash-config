@@ -323,11 +323,60 @@ rule-providers:
     interval: 86400
     url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Claude/Claude.yaml
     path: ./ruleset/Claude.yaml
+  # ---------- 自建规则：Proxy-Rules-Collection ----------
+  X:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/Jason3u/Proxy-Rules-Collection@main/clash/X.yaml
+    path: ./ruleset/Proxy-Rules-Collection-X.yaml
+  Binance:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/Jason3u/Proxy-Rules-Collection@main/clash/Binance.yaml
+    path: ./ruleset/Proxy-Rules-Collection-Binance.yaml
+  OKX:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/Jason3u/Proxy-Rules-Collection@main/clash/OKX.yaml
+    path: ./ruleset/Proxy-Rules-Collection-OKX.yaml
+  Bybit:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/Jason3u/Proxy-Rules-Collection@main/clash/Bybit.yaml
+    path: ./ruleset/Proxy-Rules-Collection-Bybit.yaml
+  Bitget:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/Jason3u/Proxy-Rules-Collection@main/clash/Bitget.yaml
+    path: ./ruleset/Proxy-Rules-Collection-Bitget.yaml
+  Gate:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/Jason3u/Proxy-Rules-Collection@main/clash/Gate.yaml
+    path: ./ruleset/Proxy-Rules-Collection-Gate.yaml
+  Cornix:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/Jason3u/Proxy-Rules-Collection@main/clash/Cornix.yaml
+    path: ./ruleset/Proxy-Rules-Collection-Cornix.yaml
 
 # ============================================================
 #  分流规则（顺序与 QX [filter_remote] + [filter_local] 完全一致）
-#  X/交易所/Cornix 为自建规则（Quantumult-X-Rules 仓库），QX 的 .list
-#  格式 Clash 无法直接引用，已逐条内联转换，内容与仓库保持同步
+#  X/交易所/Cornix 通过 Proxy-Rules-Collection 的 Clash YAML 规则集远程引用
 # ============================================================
 rules:
   # ---------- Apple 核心 → 直连 ----------
@@ -343,83 +392,14 @@ rules:
   - RULE-SET,Gemini,Gemini
   - RULE-SET,Anthropic,Claude
   - RULE-SET,Claude,Claude
-  # ---------- X（Twitter）→ X（自建规则，已剔除 grok） ----------
-  - DOMAIN-SUFFIX,ads-twitter.com,X
-  - DOMAIN-SUFFIX,cms-twdigitalassets.com,X
-  - DOMAIN-SUFFIX,periscope.tv,X
-  - DOMAIN-SUFFIX,pscp.tv,X
-  - DOMAIN-SUFFIX,t.co,X
-  - DOMAIN-SUFFIX,tellapart.com,X
-  - DOMAIN-SUFFIX,tweetdeck.com,X
-  - DOMAIN-SUFFIX,twimg.co,X
-  - DOMAIN-SUFFIX,twimg.com,X
-  - DOMAIN-SUFFIX,twimg.org,X
-  - DOMAIN-SUFFIX,twitpic.com,X
-  - DOMAIN-SUFFIX,twitter.biz,X
-  - DOMAIN-SUFFIX,twitter.jp,X
-  - DOMAIN-SUFFIX,twitter.com,X
-  - DOMAIN-SUFFIX,twittercommunity.com,X
-  - DOMAIN-SUFFIX,twitterflightschool.com,X
-  - DOMAIN-SUFFIX,twitterinc.com,X
-  - DOMAIN-SUFFIX,twitteroauth.com,X
-  - DOMAIN-SUFFIX,twitterstat.us,X
-  - DOMAIN-SUFFIX,twtrdns.net,X
-  - DOMAIN-SUFFIX,twttr.com,X
-  - DOMAIN-SUFFIX,twttr.net,X
-  - DOMAIN-SUFFIX,twvid.com,X
-  - DOMAIN-SUFFIX,vine.co,X
-  - DOMAIN-SUFFIX,x.com,X
-  - DOMAIN-KEYWORD,twitter,X
-  - IP-CIDR,192.133.76.0/22,X,no-resolve
-  - IP-CIDR,199.59.148.0/22,X,no-resolve
-  - IP-CIDR,199.96.56.0/21,X,no-resolve
-  - IP-CIDR,202.160.128.0/22,X,no-resolve
-  - IP-CIDR,209.237.192.0/19,X,no-resolve
-  - IP-CIDR,69.195.160.0/19,X,no-resolve
-  # ---------- Binance 币安（自建规则） ----------
-  - DOMAIN-SUFFIX,binance.com,Binance
-  - DOMAIN-SUFFIX,binance.vision,Binance
-  - DOMAIN-SUFFIX,binance.org,Binance
-  - DOMAIN-SUFFIX,binance.me,Binance
-  - DOMAIN-SUFFIX,binance.cloud,Binance
-  - DOMAIN-SUFFIX,binancecnt.com,Binance
-  - DOMAIN-SUFFIX,binancefuture.com,Binance
-  - DOMAIN-SUFFIX,binancezh.com,Binance
-  - DOMAIN-SUFFIX,bnbstatic.com,Binance
-  - DOMAIN-SUFFIX,bnbchain.org,Binance
-  - DOMAIN-SUFFIX,bnappzh.co,Binance
-  - DOMAIN-SUFFIX,bnbzh.ac,Binance
-  - DOMAIN-SUFFIX,bntrace.com,Binance
-  - DOMAIN-SUFFIX,saasexch.cc,Binance
-  - DOMAIN-SUFFIX,saasexch.com,Binance
-  - DOMAIN-SUFFIX,bscscan.com,Binance
-  # ---------- OKX 欧易（自建规则） ----------
-  - DOMAIN-SUFFIX,okx.com,OKX
-  - DOMAIN-SUFFIX,okex.com,OKX
-  - DOMAIN-SUFFIX,oklink.com,OKX
-  - DOMAIN-SUFFIX,okxcdn.com,OKX
-  # ---------- Bybit（自建规则） ----------
-  - DOMAIN-SUFFIX,bybit.com,Bybit
-  - DOMAIN-SUFFIX,bybitglobal.com,Bybit
-  - DOMAIN-SUFFIX,bybit.nl,Bybit
-  - DOMAIN-SUFFIX,bytick.com,Bybit
-  - DOMAIN-SUFFIX,bybits.com,Bybit
-  - DOMAIN-SUFFIX,bybit.sg,Bybit
-  # ---------- Bitget（自建规则） ----------
-  - DOMAIN-SUFFIX,bitget.com,Bitget
-  - DOMAIN-SUFFIX,bitget.site,Bitget
-  - DOMAIN-SUFFIX,bitget.info,Bitget
-  - DOMAIN-SUFFIX,bitget.io,Bitget
-  - DOMAIN-SUFFIX,bitget.cc,Bitget
-  - DOMAIN-SUFFIX,bitget.cloud,Bitget
-  # ---------- Gate（自建规则） ----------
-  - DOMAIN-SUFFIX,gate.io,Gate
-  - DOMAIN-SUFFIX,gate.com,Gate
-  - DOMAIN-SUFFIX,gateio.com,Gate
-  - DOMAIN-SUFFIX,gateio.fi,Gate
-  - DOMAIN-SUFFIX,gate.it,Gate
-  # ---------- Cornix 自动交易 → 固定新加坡地区（区内最低延迟） ----------
-  - DOMAIN-SUFFIX,cornix.io,Cornix
+  # ---------- 自建规则 → 对应策略组 ----------
+  - RULE-SET,X,X
+  - RULE-SET,Binance,Binance
+  - RULE-SET,OKX,OKX
+  - RULE-SET,Bybit,Bybit
+  - RULE-SET,Bitget,Bitget
+  - RULE-SET,Gate,Gate
+  - RULE-SET,Cornix,Cornix
   # ---------- 内网直连 ----------
   - IP-CIDR,10.0.0.0/8,DIRECT,no-resolve
   - IP-CIDR,127.0.0.0/8,DIRECT,no-resolve

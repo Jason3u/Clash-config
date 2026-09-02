@@ -29,6 +29,6 @@
 ## 说明
 
 - 规则集来源：blackmatrix7 [ios_rule_script](https://github.com/blackmatrix7/ios_rule_script)（Clash 版）
-- X / 交易所（Binance/OKX/Bybit/Bitget/Gate）/ Cornix 为自建规则，来自 [Quantumult-X-Rules](https://github.com/Jason3u/Quantumult-X-Rules)，已逐条内联进配置
+- X / 交易所（Binance/OKX/Bybit/Bitget/Gate）/ Cornix 为自建规则，来自 [Proxy-Rules-Collection](https://github.com/Jason3u/Proxy-Rules-Collection)，通过 Clash YAML `rule-providers` 远程引用并自动更新
 - 节点筛选在 QX 中文名基础上补充了常见英文缩写（HK/JP/SG 等），防止机场节点名为英文时筛不出节点
 - QX 的去广告/MitM 重写脚本 Clash 无法实现，未迁移
