@@ -21,11 +21,12 @@
 | Apple 外区（AppleNews） | 兜底分流 | 兜底分流组 |
 | AppleTV | InternationalStreaming | 国际流媒体策略组（默认香港节点） |
 | AI（OpenAI/Gemini/Claude/Grok） | 各自独立策略组 | 美国节点（可手动切地区） |
+| Telegram 消息 | Telegram | 香港节点（含 TG 官方 DC IP 段规则，可手动钉节点） |
 | X（Twitter） | X | 香港自动（住宅优先/无住宅回退香港节点） |
 | Binance 币安 | Binance | 香港自动（主域直连已被墙；可切住宅/港/日/新/台/韩/DIRECT） |
 | OKX / Bybit / Bitget / Gate | 各自独立策略组 | 香港自动（住宅优先，可手动强制住宅） |
 | TradingView 行情图表 | TradingView | 香港自动（可手动切地区） |
-| Cornix 自动交易 | Cornix | 香港节点（可手动切新加坡/日本） |
+| Cornix 自动交易 | Cornix | 香港节点（可手动切其他地区） |
 | Fomo | Fomo | DIRECT 直连（可手动切地区节点） |
 | 国际流媒体（Netflix/Disney+/HBO/YouTube/Spotify/TikTok 等） | InternationalStreaming | 香港节点（备选按风控严重性排序） |
 | 节点池 | 自动选择 + 各地区 url-test | 区内自动测速最低延迟 |

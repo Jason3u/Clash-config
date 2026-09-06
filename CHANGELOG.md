@@ -2,6 +2,16 @@
 
 > 本文件记录 ClashForSelf.yaml 配置的历次修改。每次修改前请先阅读本文件了解当前状态，修改后必须在此追加记录。
 
+## 2026-09-06（五）· Telegram 专属分流（消息延迟根治）
+
+### 排查结论
+与 QX 配置同步。TG 此前无规则无策略组：**App 收发消息直连 DC IP 不查 DNS**，域名规则全部失配，流量掉兜底 → 香港自动 →（空住宅组）→ 香港节点 url-test，每次新连接落在测速组当时挑中的节点，晚高峰拥塞时消息延迟、点开转圈。Cornix 同理（WebSocket 落在 url-test 选中的节点）。
+
+### 修改
+- 新增 Telegram select 组：`[香港节点, 日本节点, 新加坡节点, 台湾节点, 韩国节点, 美国节点]`，默认香港节点（直挂测速组绕开空住宅链路，可手动钉节点）
+- 新增 rule-provider Telegram（规则仓库 `clash/Telegram.yaml`：22 域名 + 官方 DC IP 段，IP-CIDR 带 no-resolve）+ `RULE-SET,Telegram,Telegram`（置于 X 之前）
+- Cornix 组扩充备选：增加 台湾/韩国/美国节点（默认香港不变）
+
 ## 2026-09-06（四）· Binance 默认出口改香港自动
 
 ### 排查结论（大陆网络实测）

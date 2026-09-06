@@ -13,7 +13,8 @@
 #    Apple 外区（AppleNews）           → 兜底分流
 #    AppleTV                           → InternationalStreaming
 #    AI（GPT/Gemini/Claude/Grok）      → 各自独立策略组
-#    X（Twitter）                      → X（默认香港自动，住宅优先/无住宅回退香港节点）
+#    Telegram 消息                     → Telegram（默认香港节点；App 直连 DC IP，已配 IP 段规则）
+#    X（Twitter）                      → X（默认香港自动，住宅优先，无住宅回退香港节点）
 #    Binance 币安                      → Binance（默认香港自动：主域直连已被墙，可手动切 DIRECT/友好地区）
 #    其他交易所（OKX/Bybit/Bitget/Gate）→ 各自独立策略组（默认香港自动：住宅/香港节点自动选可用）
 #    TradingView 行情图表            → TradingView（默认香港自动，可手动切地区）
@@ -190,6 +191,18 @@ proxy-groups:
       - 韩国节点
       - 台湾节点
 
+  # ---------- Telegram：默认香港节点（直挂测速组，绕开空住宅链路；消息长连接稳定优先，可手动钉节点） ----------
+  # TG App 直连 DC IP 不查 DNS，此前无规则匹配、一直掉兜底；专属组后出口固定、可手动钉节点
+  - name: Telegram
+    type: select
+    proxies:
+      - 香港节点
+      - 日本节点
+      - 新加坡节点
+      - 台湾节点
+      - 韩国节点
+      - 美国节点
+
   # ---------- X：默认香港自动（住宅优先，无住宅回退香港节点，可手动切其他地区） ----------
   - name: X
     type: select
@@ -275,13 +288,16 @@ proxy-groups:
       - 台湾节点
       - 韩国节点
 
-  # ---------- Cornix：默认香港节点，可手动切新加坡/日本（由用户自选） ----------
+  # ---------- Cornix：默认香港节点，可手动切其他地区（后端在欧美，晚高峰港节点差时可钉日/新节点） ----------
   - name: Cornix
     type: select
     proxies:
       - 香港节点
       - 新加坡节点
       - 日本节点
+      - 台湾节点
+      - 韩国节点
+      - 美国节点
 
   # ---------- Fomo：默认 DIRECT 直连，可手动切换地区节点 ----------
   # 节点备选顺序不代表 Fomo 官方风控评级；不得用于规避地区限制
@@ -444,6 +460,13 @@ rule-providers:
     interval: 3600
     url: https://cdn.jsdelivr.net/gh/Jason3u/Proxy-Rules-Collection@main/clash/Cornix.yaml
     path: ./ruleset/Proxy-Rules-Collection-Cornix.yaml
+  Telegram:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 3600
+    url: https://cdn.jsdelivr.net/gh/Jason3u/Proxy-Rules-Collection@main/clash/Telegram.yaml
+    path: ./ruleset/Proxy-Rules-Collection-Telegram.yaml
   Fomo:
     type: http
     behavior: classical
@@ -478,6 +501,7 @@ rules:
   - RULE-SET,Anthropic,Claude
   - RULE-SET,Claude,Claude
   # ---------- 自建规则 → 对应策略组 ----------
+  - RULE-SET,Telegram,Telegram
   - RULE-SET,X,X
   - RULE-SET,Binance,Binance
   - RULE-SET,OKX,OKX
