@@ -24,6 +24,7 @@
 | X（Twitter） | X | 香港自动（住宅优先/无住宅回退香港节点） |
 | Binance 币安 | Binance | DIRECT 直连（可切香港自动/住宅/港/日/新/台/韩） |
 | OKX / Bybit / Bitget / Gate | 各自独立策略组 | 香港自动（住宅优先，可手动强制住宅） |
+| TradingView 行情图表 | TradingView | 香港自动（可手动切地区） |
 | Cornix 自动交易 | Cornix | 香港节点（可手动切新加坡/日本） |
 | Fomo | Fomo | DIRECT 直连（可手动切地区节点） |
 | 国际流媒体（Netflix/Disney+/HBO/YouTube/Spotify/TikTok 等） | InternationalStreaming | 香港节点（备选按风控严重性排序） |
@@ -34,6 +35,6 @@
 ## 说明
 
 - 规则集来源：blackmatrix7 [ios_rule_script](https://github.com/blackmatrix7/ios_rule_script)（Clash 版）
-- X / 交易所（Binance/OKX/Bybit/Bitget/Gate）/ Cornix / Fomo / 国际流媒体为自建规则，来自 [Proxy-Rules-Collection](https://github.com/Jason3u/Proxy-Rules-Collection)，通过 Clash YAML `rule-providers` 远程引用并自动更新
+- X / 交易所（Binance/OKX/Bybit/Bitget/Gate）/ TradingView / Cornix / Fomo / 国际流媒体为自建规则，来自 [Proxy-Rules-Collection](https://github.com/Jason3u/Proxy-Rules-Collection)，通过 Clash YAML `rule-providers` 远程引用并自动更新
 - 节点筛选在 QX 中文名基础上补充了常见英文缩写（HK/JP/SG 等），防止机场节点名为英文时筛不出节点
 - QX 的去广告/MitM 重写脚本 Clash 无法实现，未迁移

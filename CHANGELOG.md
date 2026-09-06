@@ -16,11 +16,13 @@
 - **新增 Fomo 策略组**：默认 DIRECT，可手动切换地区节点
 - **新增 InternationalStreaming 国际流媒体策略组**：默认香港节点，备选按风控严重性排序（台湾→新加坡→韩国→日本→英国→美国）
 - **AppleTV**：兜底分流 → InternationalStreaming
+- **新增 TradingView 策略组**（与 QX 配置同步）：默认「香港自动」（住宅优先，无住宅回退香港节点），备选香港住宅IP / 香港 / 日本 / 新加坡 / 台湾 / 韩国，可手动切换
 
 ### 规则集
 - 规则仓库 [Proxy-Rules-Collection](https://github.com/Jason3u/Proxy-Rules-Collection) 的 `clash/` 目录补齐：
   - `Fomo.yaml`（与 `qx/Fomo.list` 同步）
   - `InternationalStreaming.yaml`（与 `qx/InternationalStreaming.list` 同步，来源 ddgksf2013/Filter）
+  - `TradingView.yaml`（与 `qx/TradingView.list` 同步，覆盖 `tradingview.com` 主域：官网 / 中文站 / 图表数据 / 静态资源 / API）
 
 ### 文档
 - 配置顶部新增「AI 助手必读」提示：修改前必读 CHANGELOG.md，改后必须追加记录
@@ -29,6 +31,7 @@
 | 策略组 | 默认 | 备注 |
 | --- | --- | --- |
 | OKX / Bybit / Bitget / Gate | 香港自动 | 可手动强制香港住宅IP |
+| TradingView | 香港自动 | 可手动切地区 |
 | Binance | DIRECT | 可手动切友好地区 |
 | Cornix | 香港节点 | 可手动切新加坡/日本 |
 | Fomo | DIRECT | 可手动切地区节点 |

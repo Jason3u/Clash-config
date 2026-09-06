@@ -16,6 +16,7 @@
 #    X（Twitter）                      → X（默认香港自动，住宅优先/无住宅回退香港节点）
 #    Binance 币安                      → Binance（默认国内直连，可手动切友好地区）
 #    其他交易所（OKX/Bybit/Bitget/Gate）→ 各自独立策略组（默认香港自动：住宅/香港节点自动选可用）
+#    TradingView 行情图表            → TradingView（默认香港自动，可手动切地区）
 #    Cornix 自动交易                  → Cornix（默认香港节点，可手动切新加坡/日本）
 #    Fomo                            → Fomo（默认 DIRECT 直连，可手动切换地区节点）
 #    国际流媒体（Netflix/Disney+/HBO/YouTube/Spotify/TikTok 等）→ InternationalStreaming
@@ -268,6 +269,18 @@ proxy-groups:
       - 台湾节点
       - 韩国节点
 
+  # ---------- TradingView：默认香港自动（住宅/香港节点自动选可用，可手动切地区） ----------
+  - name: TradingView
+    type: select
+    proxies:
+      - 香港自动
+      - 香港住宅IP
+      - 香港节点
+      - 日本节点
+      - 新加坡节点
+      - 台湾节点
+      - 韩国节点
+
   # ---------- Cornix：默认香港节点，可手动切新加坡/日本（由用户自选） ----------
   - name: Cornix
     type: select
@@ -423,6 +436,13 @@ rule-providers:
     interval: 3600
     url: https://cdn.jsdelivr.net/gh/Jason3u/Proxy-Rules-Collection@main/clash/Gate.yaml
     path: ./ruleset/Proxy-Rules-Collection-Gate.yaml
+  TradingView:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 3600
+    url: https://cdn.jsdelivr.net/gh/Jason3u/Proxy-Rules-Collection@main/clash/TradingView.yaml
+    path: ./ruleset/Proxy-Rules-Collection-TradingView.yaml
   Cornix:
     type: http
     behavior: classical
@@ -470,6 +490,7 @@ rules:
   - RULE-SET,Bybit,Bybit
   - RULE-SET,Bitget,Bitget
   - RULE-SET,Gate,Gate
+  - RULE-SET,TradingView,TradingView
   - RULE-SET,Cornix,Cornix
   - RULE-SET,Fomo,Fomo
   - RULE-SET,InternationalStreaming,InternationalStreaming
