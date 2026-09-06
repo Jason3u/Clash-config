@@ -14,7 +14,7 @@
 #    AppleTV                           → InternationalStreaming
 #    AI（GPT/Gemini/Claude/Grok）      → 各自独立策略组
 #    X（Twitter）                      → X（默认香港自动，住宅优先/无住宅回退香港节点）
-#    Binance 币安                      → Binance（默认国内直连，可手动切友好地区）
+#    Binance 币安                      → Binance（默认香港自动：主域直连已被墙，可手动切 DIRECT/友好地区）
 #    其他交易所（OKX/Bybit/Bitget/Gate）→ 各自独立策略组（默认香港自动：住宅/香港节点自动选可用）
 #    TradingView 行情图表            → TradingView（默认香港自动，可手动切地区）
 #    Cornix 自动交易                  → Cornix（默认香港节点，可手动切新加坡/日本）
@@ -202,14 +202,14 @@ proxy-groups:
       - 台湾节点
       - 韩国节点
 
-  # ---------- Binance 币安：默认国内直连，可手动切友好地区（按友好排名） ----------
+  # ---------- Binance 币安：默认香港自动（2026-09-06 实测主域直连已全被墙，见 CHANGELOG），可手动切 DIRECT/其他地区 ----------
   - name: Binance
     type: select
     proxies:
-      - DIRECT
       - 香港自动
       - 香港住宅IP
       - 香港节点
+      - DIRECT
       - 日本节点
       - 新加坡节点
       - 台湾节点

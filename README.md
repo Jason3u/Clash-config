@@ -22,7 +22,7 @@
 | AppleTV | InternationalStreaming | 国际流媒体策略组（默认香港节点） |
 | AI（OpenAI/Gemini/Claude/Grok） | 各自独立策略组 | 美国节点（可手动切地区） |
 | X（Twitter） | X | 香港自动（住宅优先/无住宅回退香港节点） |
-| Binance 币安 | Binance | DIRECT 直连（可切香港自动/住宅/港/日/新/台/韩） |
+| Binance 币安 | Binance | 香港自动（主域直连已被墙；可切住宅/港/日/新/台/韩/DIRECT） |
 | OKX / Bybit / Bitget / Gate | 各自独立策略组 | 香港自动（住宅优先，可手动强制住宅） |
 | TradingView 行情图表 | TradingView | 香港自动（可手动切地区） |
 | Cornix 自动交易 | Cornix | 香港节点（可手动切新加坡/日本） |

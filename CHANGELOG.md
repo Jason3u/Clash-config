@@ -2,6 +2,14 @@
 
 > 本文件记录 ClashForSelf.yaml 配置的历次修改。每次修改前请先阅读本文件了解当前状态，修改后必须在此追加记录。
 
+## 2026-09-06（四）· Binance 默认出口改香港自动
+
+### 排查结论（大陆网络实测）
+与 QX 配置同步。用户怀疑「Binance 有时走代理导致不顺畅」，实测结论相反：**direct 默认已是死路**——api/accounts/stream/cdn-apps.binance.com、public.bnbstatic.com 直连全部被墙，大陆镜像域（binancecnt/binancezh/bnappzh/binance.me/binance.cloud）基本失效，仅 bnbzh.ac 慢通（2.9s）。不顺畅的真实原因 = 主域请求 5 秒级超时重试 + 出口 IP 在大陆/香港间跳变引发风控摩擦。规则文件（clash/Binance.yaml）覆盖度完备，无需改动。
+
+### 修改
+- Binance 组默认 `DIRECT` → `香港自动`：`[香港自动, 香港住宅IP, 香港节点, DIRECT, 日本节点, 新加坡节点, 台湾节点, 韩国节点]`，DIRECT 保留为手动选项
+
 ## 2026-09-06（三）· 兜底分流重排
 
 ### 修改
