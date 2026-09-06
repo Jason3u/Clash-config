@@ -30,7 +30,7 @@
 | 国际流媒体（Netflix/Disney+/HBO/YouTube/Spotify/TikTok 等） | InternationalStreaming | 香港节点（备选按风控严重性排序） |
 | 节点池 | 自动选择 + 各地区 url-test | 区内自动测速最低延迟 |
 | 国内网站 | 直连 | DIRECT（GEOIP,CN） |
-| 其余外网 | 兜底分流 | 兜底分流组（默认自动选择） |
+| 其余外网 | 兜底分流 | 香港自动（备选顺序：台湾 → 韩国 → 日本） |
 
 ## 说明
 
