@@ -2,6 +2,14 @@
 
 > 本文件记录 ClashForSelf.yaml 配置的历次修改。每次修改前请先阅读本文件了解当前状态，修改后必须在此追加记录。
 
+## 2026-09-06（二）· 连接稳定性修复
+
+### 修复
+- **所有 url-test 组 `tolerance: 0` → `tolerance: 100`**：与 QX 配置同步修复。零容差导致任何微小波动即切换节点，IP 频繁跳变：长连接（Cornix WebSocket `wss://dashboard.cornix.io/ws/ws/` 等）频繁断开重连，消息类 App 断连、界面反复转圈
+
+### 规则集
+- **Cornix 规则大幅扩充**（[Proxy-Rules-Collection](https://github.com/Jason3u/Proxy-Rules-Collection) `clash/Cornix.yaml`，与 `qx/Cornix.list` 同步）：原规则仅 `cornix.io` 一条。实测 dashboard.cornix.io 的 JS 包，补全其运行时第三方依赖：intercom.io（客服组件）、country.is（国家检测）、mixpanel.com / mxpnl.com（埋点）、avo.app、hotjar.com、sentry.io（错误上报）、whop.com（支付）、calendly.com、googletagmanager.com。这些域名此前漏到兜底分流且每个都要本地 DNS 解析后判断 geoip，是 Cornix 界面「每次点击都转圈」的主因之一；极验 geetest.com 有国内节点，维持 geoip cn 直连，不收入规则
+
 ## 2026-09-06
 
 ### 订阅
