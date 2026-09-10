@@ -47,17 +47,18 @@ dns:
     - 223.5.5.5
     - 119.29.29.29
 
-# 机场订阅（对应 QX [server_remote] 良心云）
+# 机场订阅（对应 QX [server_remote] 吹雪云）
+# V2Board flag=clash 返回 Clash 格式，Clash 原生支持无需转换
 proxy-providers:
-  良心云:
+  吹雪云:
     type: http
     interval: 86400
     health-check:
       enable: true
       url: http://www.gstatic.com/generate_204
       interval: 1200
-    url: https://liangxin.xyz/api/v1/liangxin?OwO=08473de9c81c32890fb3c8744ba74b5b
-    path: ./proxy_providers/liangxin.yaml
+    url: https://xn--9kqs1lo79d.cc/api/v1/chuixue?token=91fab8fdd1ef939b9e4c35fe522c97e1&flag=clash
+    path: ./proxy_providers/chuixue.yaml
 
 # 对应 QX [server_local] 留空
 proxies: null
@@ -72,62 +73,62 @@ proxy-groups:
     url: http://www.gstatic.com/generate_204
     interval: 1200
     tolerance: 100
-    use: [良心云]
+    use: [吹雪云]
   - name: 美国节点
     type: url-test
     url: http://www.gstatic.com/generate_204
     interval: 1200
     tolerance: 100
-    use: [良心云]
+    use: [吹雪云]
     filter: "美国|美|US|(?i)States|American"
   - name: 日本节点
     type: url-test
     url: http://www.gstatic.com/generate_204
     interval: 1200
     tolerance: 100
-    use: [良心云]
+    use: [吹雪云]
     filter: "日本|JP|(?i)Japan|东京|大阪"
   - name: 新加坡节点
     type: url-test
     url: http://www.gstatic.com/generate_204
     interval: 1200
     tolerance: 100
-    use: [良心云]
+    use: [吹雪云]
     filter: "新加坡|狮城|SG|(?i)Singapore"
   - name: 英国节点
     type: url-test
     url: http://www.gstatic.com/generate_204
     interval: 1200
     tolerance: 100
-    use: [良心云]
+    use: [吹雪云]
     filter: "英国|英|UK|(?i)Britain|London"
   - name: 韩国节点
     type: url-test
     url: http://www.gstatic.com/generate_204
     interval: 1200
     tolerance: 100
-    use: [良心云]
+    use: [吹雪云]
     filter: "韩国|韩|KR|(?i)Korea|首尔"
   - name: 台湾节点
     type: url-test
     url: http://www.gstatic.com/generate_204
     interval: 1200
     tolerance: 100
-    use: [良心云]
+    use: [吹雪云]
     filter: "台湾|TW|(?i)Taiwan|台北"
   - name: 香港节点
     type: url-test
     url: http://www.gstatic.com/generate_204
     interval: 1200
     tolerance: 100
-    use: [良心云]
+    use: [吹雪云]
     filter: "香港|港|HK|(?i)Hong"
   - name: 香港住宅IP
     type: url-test
     url: http://www.gstatic.com/generate_204
     interval: 1200
     tolerance: 100
-    use: [良心云]
+    use: [吹雪云]
     filter: "住宅"
 
   # ---------- 香港自动：住宅优先，无住宅时自动回退香港节点（对应 QX available；Clash fallback 支持嵌套组） ----------
@@ -142,7 +143,7 @@ proxy-groups:
   # ---------- 手动切换（对应 QX static 组内 proxy 选项：手动指定单个节点） ----------
   - name: 手动切换
     type: select
-    use: [良心云]
+    use: [吹雪云]
 
   # ---------- 兜底分流：未命中规则的外网流量最终出口（默认香港自动，顺序：香港→台湾→韩国→日本） ----------
   - name: 兜底分流
