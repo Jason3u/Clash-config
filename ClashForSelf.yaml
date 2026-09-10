@@ -55,8 +55,11 @@ proxy-providers:
     interval: 86400
     health-check:
       enable: true
-      url: http://www.gstatic.com/generate_204
-      interval: 1200
+      url: https://cp.cloudflare.com
+      interval: 86400
+      lazy: true
+      timeout: 5000
+      expected-status: 204
     url: https://xn--9kqs1lo79d.cc/api/v1/chuixue?token=91fab8fdd1ef939b9e4c35fe522c97e1&flag=clash
     path: ./proxy_providers/chuixue.yaml
 
@@ -67,66 +70,93 @@ proxies: null
 #  策略组
 # ============================================================
 proxy-groups:
-  # ---------- 节点池（url-test 自动测速，对应 QX url-latency-benchmark，check-interval=1200, tolerance=100） ----------
+  # ---------- 节点池（每天懒检测一次，减少测试订阅的并发连接；tolerance=100） ----------
   - name: 自动选择
     type: url-test
-    url: http://www.gstatic.com/generate_204
-    interval: 1200
+    url: https://cp.cloudflare.com
+    interval: 86400
+    lazy: true
+    timeout: 5000
+    expected-status: 204
     tolerance: 100
     use: [吹雪云]
   - name: 美国节点
     type: url-test
-    url: http://www.gstatic.com/generate_204
-    interval: 1200
+    url: https://cp.cloudflare.com
+    interval: 86400
+    lazy: true
+    timeout: 5000
+    expected-status: 204
     tolerance: 100
     use: [吹雪云]
     filter: "美国|美|US|(?i)States|American"
   - name: 日本节点
     type: url-test
-    url: http://www.gstatic.com/generate_204
-    interval: 1200
+    url: https://cp.cloudflare.com
+    interval: 86400
+    lazy: true
+    timeout: 5000
+    expected-status: 204
     tolerance: 100
     use: [吹雪云]
     filter: "日本|JP|(?i)Japan|东京|大阪"
   - name: 新加坡节点
     type: url-test
-    url: http://www.gstatic.com/generate_204
-    interval: 1200
+    url: https://cp.cloudflare.com
+    interval: 86400
+    lazy: true
+    timeout: 5000
+    expected-status: 204
     tolerance: 100
     use: [吹雪云]
     filter: "新加坡|狮城|SG|(?i)Singapore"
   - name: 英国节点
     type: url-test
-    url: http://www.gstatic.com/generate_204
-    interval: 1200
+    url: https://cp.cloudflare.com
+    interval: 86400
+    lazy: true
+    timeout: 5000
+    expected-status: 204
     tolerance: 100
     use: [吹雪云]
     filter: "英国|英|UK|(?i)Britain|London"
   - name: 韩国节点
     type: url-test
-    url: http://www.gstatic.com/generate_204
-    interval: 1200
+    url: https://cp.cloudflare.com
+    interval: 86400
+    lazy: true
+    timeout: 5000
+    expected-status: 204
     tolerance: 100
     use: [吹雪云]
     filter: "韩国|韩|KR|(?i)Korea|首尔"
   - name: 台湾节点
     type: url-test
-    url: http://www.gstatic.com/generate_204
-    interval: 1200
+    url: https://cp.cloudflare.com
+    interval: 86400
+    lazy: true
+    timeout: 5000
+    expected-status: 204
     tolerance: 100
     use: [吹雪云]
     filter: "台湾|TW|(?i)Taiwan|台北"
   - name: 香港节点
     type: url-test
-    url: http://www.gstatic.com/generate_204
-    interval: 1200
+    url: https://cp.cloudflare.com
+    interval: 86400
+    lazy: true
+    timeout: 5000
+    expected-status: 204
     tolerance: 100
     use: [吹雪云]
     filter: "香港|港|HK|(?i)Hong"
   - name: 香港住宅IP
     type: url-test
-    url: http://www.gstatic.com/generate_204
-    interval: 1200
+    url: https://cp.cloudflare.com
+    interval: 86400
+    lazy: true
+    timeout: 5000
+    expected-status: 204
     tolerance: 100
     use: [吹雪云]
     filter: "住宅"
@@ -134,8 +164,11 @@ proxy-groups:
   # ---------- 香港自动：住宅优先，无住宅时自动回退香港节点（对应 QX available；Clash fallback 支持嵌套组） ----------
   - name: 香港自动
     type: fallback
-    url: http://www.gstatic.com/generate_204
-    interval: 1200
+    url: https://cp.cloudflare.com
+    interval: 86400
+    lazy: true
+    timeout: 5000
+    expected-status: 204
     proxies:
       - 香港住宅IP
       - 香港节点
